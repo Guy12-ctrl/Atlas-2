@@ -9,12 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const CLIENT_ID = process.env.DERIV_CLIENT_ID;
+
 const REDIRECT_URI =
   process.env.DERIV_REDIRECT_URI ||
   "https://atlas-2-iy4i.onrender.com/auth/callback";
 
 const SESSION_SECRET =
-  process.env.SESSION_SECRET || "atlas-development-secret-change-me";
+  process.env.SESSION_SECRET ||
+  "atlas-development-secret-change-me";
 
 if (!CLIENT_ID) {
   console.warn("⚠️ DERIV_CLIENT_ID n'est pas configuré.");
@@ -43,7 +45,7 @@ app.use(
    FRONTEND
 ========================= */
 
-const frontendPath = path.join(__dirname, "../frontend");
+const frontendPath = path.join(__dirname, "frontend");
 
 app.use(express.static(frontendPath));
 
@@ -75,28 +77,34 @@ function generateCodeChallenge(verifier) {
 
 app.get("/auth/login", (req, res) => {
   if (!CLIENT_ID) {
-    return res.status(500).send("DERIV_CLIENT_ID n'est pas configuré.");
+    return res.status(500).send(`
+      <h2>Configuration ATLAS</h2>
+      <p>DERIV_CLIENT_ID n'est pas configuré sur le serveur.</p>
+    `);
   }
 
   const state = crypto.randomBytes(32).toString("hex");
+
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = generateCodeChallenge(codeVerifier);
 
   req.session.oauthState = state;
   req.session.codeVerifier = codeVerifier;
 
-  const authUrl = new URL("https://auth.deriv.com/oauth2/auth");
+  const authUrl = new URL(
+    "https://auth.deriv.com/oauth2/auth"
+  );
 
   authUrl.searchParams.set("response_type", "code");
   authUrl.searchParams.set("client_id", CLIENT_ID);
   authUrl.searchParams.set("redirect_uri", REDIRECT_URI);
-
-  // ATLAS demande uniquement l'accès nécessaire au trading.
   authUrl.searchParams.set("scope", "trade");
-
   authUrl.searchParams.set("state", state);
   authUrl.searchParams.set("code_challenge", codeChallenge);
-  authUrl.searchParams.set("code_challenge_method", "S256");
+  authUrl.searchParams.set(
+    "code_challenge_method",
+    "S256"
+  );
 
   res.redirect(authUrl.toString());
 });
@@ -107,7 +115,12 @@ app.get("/auth/login", (req, res) => {
 
 app.get("/auth/callback", async (req, res) => {
   try {
-    const { code, state, error, error_description } = req.query;
+    const {
+      code,
+      state,
+      error,
+      error_description
+    } = req.query;
 
     if (error) {
       return res.status(400).send(`
@@ -118,54 +131,84 @@ app.get("/auth/callback", async (req, res) => {
     }
 
     if (!code || !state) {
-      return res.status(400).send("Code ou state manquant.");
+      return res.status(400).send(`
+        <h2>Erreur ATLAS</h2>
+        <p>Code ou state manquant.</p>
+        <p><a href="/">Retour à ATLAS</a></p>
+      `);
     }
 
-    if (!req.session.oauthState || state !== req.session.oauthState) {
-      return res.status(400).send("Erreur de sécurité : state invalide.");
+    if (
+      !req.session.oauthState ||
+      state !== req.session.oauthState
+    ) {
+      return res.status(400).send(`
+        <h2>Erreur de sécurité</h2>
+        <p>State invalide.</p>
+        <p><a href="/">Retour à ATLAS</a></p>
+      `);
     }
 
     if (!req.session.codeVerifier) {
-      return res.status(400).send("Code PKCE manquant.");
+      return res.status(400).send(`
+        <h2>Erreur ATLAS</h2>
+        <p>Code PKCE manquant.</p>
+        <p><a href="/">Retour à ATLAS</a></p>
+      `);
     }
 
-    const response = await fetch("https://auth.deriv.com/oauth2/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: CLIENT_ID,
-        code,
-        code_verifier: req.session.codeVerifier,
-        redirect_uri: REDIRECT_URI
-      })
-    });
+    const response = await fetch(
+      "https://auth.deriv.com/oauth2/token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          client_id: CLIENT_ID,
+          code,
+          code_verifier:
+            req.session.codeVerifier,
+          redirect_uri: REDIRECT_URI
+        })
+      }
+    );
 
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Erreur Deriv:", data);
+      console.error("Erreur Deriv :", data);
+
       return res.status(400).send(`
         <h2>Erreur de connexion Deriv</h2>
-        <pre>${JSON.stringify(data, null, 2)}</pre>
+        <pre>${JSON.stringify(
+          data,
+          null,
+          2
+        )}</pre>
         <p><a href="/">Retour à ATLAS</a></p>
       `);
     }
 
     /*
       Le token reste côté serveur.
-      Il n'est jamais envoyé directement au navigateur.
+      Il n'est jamais envoyé directement
+      au navigateur.
     */
-    req.session.derivAccessToken = data.access_token;
+
+    req.session.derivAccessToken =
+      data.access_token;
 
     delete req.session.oauthState;
     delete req.session.codeVerifier;
 
     res.redirect("/?connected=1");
+
   } catch (error) {
-    console.error(error);
+
+    console.error("Erreur callback :", error);
 
     res.status(500).send(`
       <h2>Erreur serveur ATLAS</h2>
@@ -180,9 +223,12 @@ app.get("/auth/callback", async (req, res) => {
 ========================= */
 
 app.get("/api/auth/status", (req, res) => {
+
   res.json({
-    connected: Boolean(req.session.derivAccessToken)
+    connected:
+      Boolean(req.session.derivAccessToken)
   });
+
 });
 
 /* =========================
@@ -190,9 +236,15 @@ app.get("/api/auth/status", (req, res) => {
 ========================= */
 
 app.post("/auth/logout", (req, res) => {
+
   req.session.destroy(() => {
-    res.json({ success: true });
+
+    res.json({
+      success: true
+    });
+
   });
+
 });
 
 /* =========================
@@ -200,17 +252,25 @@ app.post("/auth/logout", (req, res) => {
 ========================= */
 
 app.get("/api/health", (req, res) => {
+
   res.json({
     status: "ok",
     platform: "ATLAS",
     derivOAuth: Boolean(CLIENT_ID)
   });
+
 });
 
 /* =========================
    SERVEUR
 ========================= */
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 ATLAS fonctionne sur le port ${PORT}`);
-});
+app.listen(
+  PORT,
+  "0.0.0.0",
+  () => {
+    console.log(
+      `🚀 ATLAS fonctionne sur le port ${PORT}`
+    );
+  }
+);
