@@ -1,14 +1,13 @@
 {
-  "name": "atlas-v1",
+  "name": "atlas",
   "version": "1.0.0",
-  "private": true,
-  "description": "ATLAS V1 - plateforme de trading Deriv avec OAuth 2.0 + PKCE",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "node --watch backend/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^5.1.0",
-    "express-session": "^1.18.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
   }
 }
