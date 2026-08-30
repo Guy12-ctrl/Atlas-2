@@ -5,58 +5,283 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#070b14">
 <title>ATLAS — Connexion Deriv</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#070b14;color:#f8fafc;font-family:Arial,Helvetica,sans-serif}button{font:inherit;cursor:pointer}.wrap{min-height:100vh;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:44px 44px}.nav{height:72px;border-bottom:1px solid #172236;background:#070b14e8;backdrop-filter:blur(18px);display:flex;align-items:center;padding:0 28px}.logo{font-size:23px;font-weight:900}.grad{background:linear-gradient(90deg,#a78bfa,#22d3ee);color:transparent;background-clip:text}.status{margin-left:auto;color:#7d8ba0;font-size:12px;display:flex;align-items:center;gap:7px}.indicator{width:8px;height:8px;border-radius:50%;background:#64748b}.indicator.on{background:#22c55e;box-shadow:0 0 12px #22c55e}.main{width:min(1050px,calc(100% - 32px));margin:auto;padding:80px 0}.hero{text-align:center}.eyebrow{display:inline-block;color:#c4b5fd;background:#7c3aed18;border:1px solid #a78bfa33;border-radius:999px;padding:8px 13px;font-size:11px}.hero h1{font-size:clamp(44px,8vw,78px);line-height:1;margin:22px 0 0;letter-spacing:-4px}.hero p{max-width:650px;margin:22px auto;color:#8391a6;line-height:1.8}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:55px}.card{background:#0b1220cc;border:1px solid #19263a;border-radius:18px;padding:28px}.card h2{font-size:20px;margin:0 0 10px}.card p{color:#7d8ba0;font-size:13px;line-height:1.7}.login{margin-top:22px;width:100%;border:0;border-radius:11px;padding:14px;background:white;color:#07101a;font-weight:900}.secondary{margin-top:10px;width:100%;border:1px solid #263249;border-radius:11px;padding:13px;background:#111a29;color:white}.checks{display:grid;gap:12px;margin-top:20px}.check{padding:12px;border-radius:10px;background:#0a101b;color:#b8c3d4;font-size:12px}.check b{color:#22c55e}.connected{display:none;margin-top:18px;padding:13px;background:#0b2118;border:1px solid #14532d;color:#86efac;border-radius:10px;font-size:12px}.connected.show{display:block}.small{margin-top:28px;text-align:center;color:#526077;font-size:11px}@media(max-width:700px){.grid{grid-template-columns:1fr}.main{padding-top:55px}.nav{padding:0 16px}}
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:#f8fafc;font-family:Arial,Helvetica,sans-serif}
+button{font:inherit;cursor:pointer}
+.wrap{min-height:100vh;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:44px 44px}
+.nav{height:72px;border-bottom:1px solid #172236;background:#070b14e8;backdrop-filter:blur(18px);display:flex;align-items:center;padding:0 28px}
+.logo{font-size:23px;font-weight:900}
+.grad{background:linear-gradient(90deg,#a78bfa,#22d3ee);color:transparent;background-clip:text}
+.status{margin-left:auto;color:#7d8ba0;font-size:12px;display:flex;align-items:center;gap:7px}
+.indicator{width:8px;height:8px;border-radius:50%;background:#64748b}
+.indicator.on{background:#22c55e;box-shadow:0 0 12px #22c55e}
+.main{width:min(1050px,calc(100% - 32px));margin:auto;padding:80px 0}
+.hero{text-align:center}
+.eyebrow{display:inline-block;color:#c4b5fd;background:#7c3aed18;border:1px solid #a78bfa33;border-radius:999px;padding:8px 13px;font-size:11px}
+.hero h1{font-size:clamp(44px,8vw,78px);line-height:1;margin:22px 0 0;letter-spacing:-4px}
+.hero p{max-width:650px;margin:22px auto;color:#8391a6;line-height:1.8}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:55px}
+.card{background:#0b1220cc;border:1px solid #19263a;border-radius:18px;padding:28px}
+.card h2{font-size:20px;margin:0 0 10px}
+.card p{color:#7d8ba0;font-size:13px;line-height:1.7}
+.login{margin-top:22px;width:100%;border:0;border-radius:11px;padding:14px;background:white;color:#07101a;font-weight:900}
+.secondary{margin-top:10px;width:100%;border:1px solid #263249;border-radius:11px;padding:13px;background:#111a29;color:white}
+.token{margin-top:18px;width:100%;padding:14px;border-radius:11px;border:1px solid #263249;background:#080e18;color:white;outline:none}
+.token:focus{border-color:#7c3aed}
+.connected{display:none;margin-top:18px;padding:13px;background:#0b2118;border:1px solid #14532d;color:#86efac;border-radius:10px;font-size:12px}
+.connected.show{display:block}
+.error{display:none;margin-top:12px;padding:12px;background:#2a1014;border:1px solid #7f1d1d;color:#fca5a5;border-radius:10px;font-size:12px}
+.error.show{display:block}
+.checks{display:grid;gap:12px;margin-top:20px}
+.check{padding:12px;border-radius:10px;background:#0a101b;color:#b8c3d4;font-size:12px}
+.check b{color:#22c55e}
+.small{margin-top:28px;text-align:center;color:#526077;font-size:11px}
+@media(max-width:700px){
+.grid{grid-template-columns:1fr}
+.main{padding-top:55px}
+.nav{padding:0 16px}
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <header class="nav">
   <div class="logo"><span class="grad">AT</span>LAS</div>
-  <div class="status"><span id="indicator" class="indicator"></span><span id="status">Non connecté</span></div>
-</header>
-<main class="main">
-  <section class="hero">
-    <div class="eyebrow">ATLAS V1 • DERIV</div>
-    <h1>Votre espace de trading.<br><span class="grad">Connecté à Deriv.</span></h1>
-    <p>Cette première version pose la vraie architecture d'ATLAS : authentification Deriv OAuth 2.0 avec PKCE, session serveur sécurisée et base prête pour le tableau de bord de trading.</p>
-  </section>
-  <div class="grid">
-    <section class="card">
-      <h2>Connexion sécurisée</h2>
-      <p>Vous êtes redirigé vers Deriv pour vous authentifier. ATLAS ne demande ni ne stocke votre mot de passe Deriv.</p>
-      <button id="connect" class="login">Se connecter avec Deriv</button>
-      <button id="logout" class="secondary">Déconnecter</button>
-      <div id="connected" class="connected">✓ Compte Deriv authentifié. La prochaine étape est de charger le compte et le WebSocket privé.</div>
-    </section>
-    <section class="card">
-      <h2>Ce qui est prêt</h2>
-      <div class="checks">
-        <div class="check"><b>✓</b> OAuth 2.0 Authorization Code</div>
-        <div class="check"><b>✓</b> PKCE S256</div>
-        <div class="check"><b>✓</b> Protection CSRF avec state</div>
-        <div class="check"><b>✓</b> Échange du token côté serveur</div>
-        <div class="check"><b>✓</b> Token absent du JavaScript client</div>
-        <div class="check"><b>→</b> Compte / solde / WebSocket privé : étape suivante</div>
-      </div>
-    </section>
+
+  <div class="status">
+    <span id="indicator" class="indicator"></span>
+    <span id="status">Non connecté</span>
   </div>
-  <div class="small">ATLAS V1 — aucune opération réelle n'est exécutée dans cette version.</div>
-</main>
+</header>
+
+<main class="main">
+
+<section class="hero">
+
+<div class="eyebrow">ATLAS V1 • DERIV</div>
+
+<h1>
+Votre espace de trading.<br>
+<span class="grad">Connecté à Deriv.</span>
+</h1>
+
+<p>
+Connectez votre compte Deriv directement avec votre API Token.
+Votre token n'est pas affiché dans l'URL et reste géré par le serveur ATLAS.
+</p>
+
+</section>
+
+<div class="grid">
+
+<section class="card">
+
+<h2>Connexion Deriv</h2>
+
+<p>
+Collez votre API Token Deriv pour connecter votre compte à ATLAS.
+</p>
+
+<input
+  id="derivToken"
+  class="token"
+  type="password"
+  placeholder="Votre API Token Deriv"
+  autocomplete="off"
+/>
+
+<button id="connect" class="login">
+Se connecter à Deriv
+</button>
+
+<button id="logout" class="secondary">
+Déconnecter
+</button>
+
+<div id="error" class="error"></div>
+
+<div id="connected" class="connected">
+✓ Compte Deriv connecté à ATLAS.
 </div>
+
+</section>
+
+<section class="card">
+
+<h2>Connexion sécurisée</h2>
+
+<div class="checks">
+
+<div class="check">
+<b>✓</b> Connexion par API Token
+</div>
+
+<div class="check">
+<b>✓</b> Aucun mot de passe Deriv demandé
+</div>
+
+<div class="check">
+<b>✓</b> Token conservé côté serveur
+</div>
+
+<div class="check">
+<b>✓</b> Token absent de l'URL
+</div>
+
+<div class="check">
+<b>✓</b> Vérification auprès de Deriv
+</div>
+
+<div class="check">
+<b>→</b> Solde et données du compte : prochaine étape
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<div class="small">
+ATLAS V1 — aucune opération réelle n'est exécutée dans cette version.
+</div>
+
+</main>
+
+</div>
+
 <script>
-async function status(){
+
+async function checkStatus(){
+
   try{
-    const r=await fetch('/api/auth/status');
-    const d=await r.json();
-    document.getElementById('status').textContent=d.connected?'Connecté à Deriv':'Non connecté';
-    document.getElementById('indicator').classList.toggle('on',d.connected);
-    document.getElementById('connected').classList.toggle('show',d.connected);
-  }catch{}
+
+    const response = await fetch("/api/auth/status");
+    const data = await response.json();
+
+    const connected = Boolean(data.connected);
+
+    document.getElementById("status").textContent =
+      connected ? "Connecté à Deriv" : "Non connecté";
+
+    document
+      .getElementById("indicator")
+      .classList.toggle("on", connected);
+
+    document
+      .getElementById("connected")
+      .classList.toggle("show", connected);
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
 }
-document.getElementById('connect').onclick=()=>location.href='/auth/login';
-document.getElementById('logout').onclick=async()=>{await fetch('/auth/logout',{method:'POST'});status()};
-status();
+
+
+document.getElementById("connect").onclick = async () => {
+
+  const token =
+    document.getElementById("derivToken").value.trim();
+
+  const errorBox =
+    document.getElementById("error");
+
+  errorBox.classList.remove("show");
+  errorBox.textContent = "";
+
+  if(!token){
+
+    errorBox.textContent =
+      "Veuillez entrer votre API Token Deriv.";
+
+    errorBox.classList.add("show");
+
+    return;
+  }
+
+  const button =
+    document.getElementById("connect");
+
+  button.disabled = true;
+  button.textContent = "Connexion...";
+
+  try{
+
+    const response = await fetch("/auth/token",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        token:token
+      })
+
+    });
+
+    const data = await response.json();
+
+    if(!response.ok || !data.success){
+
+      throw new Error(
+        data.message || "Connexion impossible."
+      );
+
+    }
+
+    document.getElementById("derivToken").value = "";
+
+    await checkStatus();
+
+  }catch(error){
+
+    errorBox.textContent =
+      error.message || "Erreur de connexion.";
+
+    errorBox.classList.add("show");
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "Se connecter à Deriv";
+
+  }
+
+};
+
+
+document.getElementById("logout").onclick = async () => {
+
+  try{
+
+    await fetch("/auth/logout",{
+      method:"POST"
+    });
+
+    await checkStatus();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+checkStatus();
+
 </script>
+
 </body>
 </html>
