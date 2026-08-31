@@ -4,20 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#070b14">
+
 <title>ATLAS — Trading Workspace</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
 
 body{
-  margin:0;
   background:#070b14;
   color:#f8fafc;
   font-family:Arial,Helvetica,sans-serif;
 }
 
-button,input,select{font:inherit}
-button{cursor:pointer}
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
 
 :root{
   --bg:#070b14;
@@ -29,6 +45,7 @@ button{cursor:pointer}
   --cyan:#22d3ee;
   --green:#22c55e;
   --red:#ef4444;
+  --yellow:#f59e0b;
 }
 
 .app{
@@ -38,6 +55,10 @@ button{cursor:pointer}
     linear-gradient(90deg,#ffffff05 1px,transparent 1px);
   background-size:44px 44px;
 }
+
+/* ==============================
+   TOP BAR
+============================== */
 
 .top{
   height:68px;
@@ -56,10 +77,15 @@ button{cursor:pointer}
 .logo{
   font-size:22px;
   font-weight:900;
+  letter-spacing:.02em;
 }
 
 .grad{
-  background:linear-gradient(90deg,var(--accent),var(--cyan));
+  background:linear-gradient(
+    90deg,
+    var(--accent),
+    var(--cyan)
+  );
   color:transparent;
   background-clip:text;
   -webkit-background-clip:text;
@@ -85,6 +111,10 @@ button{cursor:pointer}
   background:var(--green);
   box-shadow:0 0 10px var(--green);
 }
+
+/* ==============================
+   LAYOUT
+============================== */
 
 .layout{
   display:grid;
@@ -124,8 +154,17 @@ button{cursor:pointer}
   margin:auto;
 }
 
-.page{display:none}
-.page.active{display:block}
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* ==============================
+   GENERAL
+============================== */
 
 h1{
   margin:0;
@@ -177,15 +216,6 @@ h2{
   margin-top:8px;
 }
 
-.stats{
-  grid-template-columns:repeat(4,1fr);
-  margin:18px 0;
-}
-
-.tradegrid{
-  grid-template-columns:1fr 1fr;
-}
-
 .notice{
   padding:11px;
   border-radius:9px;
@@ -198,6 +228,23 @@ h2{
 .danger{
   color:#fca5a5;
 }
+
+/* ==============================
+   STATS
+============================== */
+
+.stats{
+  grid-template-columns:repeat(4,1fr);
+  margin:18px 0;
+}
+
+.tradegrid{
+  grid-template-columns:1fr 1fr;
+}
+
+/* ==============================
+   MARKETS
+============================== */
 
 .marketgrid{
   grid-template-columns:280px 1fr 300px;
@@ -259,6 +306,10 @@ h2{
   height:100%;
 }
 
+/* ==============================
+   INPUTS / BUTTONS
+============================== */
+
 .field{
   margin:10px 0;
 }
@@ -278,6 +329,12 @@ select{
   background:#080e18;
   color:white;
   border-radius:9px;
+  outline:none;
+}
+
+.input:focus,
+select:focus{
+  border-color:#64748b;
 }
 
 .btn{
@@ -290,11 +347,6 @@ select{
   background:white;
   color:#07101a;
   font-weight:800;
-}
-
-.primary:disabled{
-  opacity:.6;
-  cursor:wait;
 }
 
 .green{
@@ -312,6 +364,10 @@ select{
   color:white;
   border:1px solid #263249;
 }
+
+/* ==============================
+   TABLE
+============================== */
 
 .table{
   width:100%;
@@ -332,6 +388,10 @@ select{
   color:#65748b;
 }
 
+/* ==============================
+   LOGIN
+============================== */
+
 .login{
   max-width:520px;
   margin:80px auto;
@@ -351,11 +411,9 @@ select{
   margin-top:10px;
 }
 
-.success{
-  color:#86efac;
-  font-size:12px;
-  margin-top:10px;
-}
+/* ==============================
+   BOTS
+============================== */
 
 .botempty{
   min-height:430px;
@@ -371,6 +429,10 @@ select{
 .botempty h2{
   font-size:24px;
 }
+
+/* ==============================
+   RESPONSIVE
+============================== */
 
 @media(max-width:1000px){
 
@@ -408,6 +470,7 @@ select{
   .tradegrid{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:600px){
@@ -427,7 +490,9 @@ select{
   .big{
     font-size:20px;
   }
+
 }
+
 </style>
 </head>
 
@@ -451,10 +516,9 @@ select{
 
   </div>
 
-</header>
-
-
-<!-- ================= LOGIN ================= -->
+</header><!-- ==============================
+     LOGIN
+============================== -->
 
 <div id="login" class="content">
 
@@ -485,9 +549,10 @@ select{
       Se connecter
     </button>
 
-    <div id="loginError" class="error"></div>
-
-    <div id="loginSuccess" class="success"></div>
+    <div
+      id="loginError"
+      class="error"
+    ></div>
 
     <div class="notice">
       Votre token est utilisé côté serveur.
@@ -499,7 +564,9 @@ select{
 </div>
 
 
-<!-- ================= WORKSPACE ================= -->
+<!-- ==============================
+     WORKSPACE
+============================== -->
 
 <div
   id="workspace"
@@ -507,548 +574,824 @@ select{
   style="display:none"
 >
 
-<aside class="side">
-
-  <button class="navbtn active" data-page="dashboard">
-    ⌂ Dashboard
-  </button>
-
-  <button class="navbtn" data-page="markets">
-    ◈ Marchés
-  </button>
-
-  <button class="navbtn" data-page="trading">
-    ↗ Trading
-  </button>
-
-  <button class="navbtn" data-page="positions">
-    ▣ Positions
-  </button>
-
-  <button class="navbtn" data-page="history">
-    ◷ Historique
-  </button>
-
-  <button class="navbtn" data-page="bots">
-    ⚙ Bots
-  </button>
-
-  <button class="navbtn" data-page="settings">
-    ⚙ Paramètres
-  </button>
-
-  <button id="logout" class="navbtn">
-    ⇥ Déconnexion
-  </button>
-
-</aside>
-
-
-<main class="content">
-
-
-<!-- ================= DASHBOARD ================= -->
-
-<section id="dashboard" class="page active">
-
-  <div class="between row">
-
-    <div>
-
-      <h1>Dashboard</h1>
-
-      <p class="muted">
-        Vue générale de votre compte Deriv.
-      </p>
-
-    </div>
-
-    <div id="accountBadge" class="notice">
-      Compte : —
-    </div>
-
-  </div>
-
-
-  <div class="grid stats">
-
-    <div class="card">
-
-      <div class="label">Solde</div>
-
-      <div id="balance" class="big">—</div>
-
-    </div>
-
-    <div class="card">
-
-      <div class="label">Devise</div>
-
-      <div id="currency" class="big">—</div>
-
-    </div>
-
-    <div class="card">
-
-      <div class="label">Positions</div>
-
-      <div id="positionCount" class="big">0</div>
-
-    </div>
-
-    <div class="card">
-
-      <div class="label">P/L ouvert</div>
-
-      <div id="openProfit" class="big">—</div>
-
-    </div>
-
-  </div>
-
-
-  <div class="grid tradegrid">
-
-    <div class="card">
-
-      <h2>Marché actif</h2>
-
-      <div id="dashSymbol" class="big">—</div>
-
-      <p id="dashPrice" class="muted">—</p>
-
-    </div>
-
-    <div class="card">
-
-      <h2>État</h2>
-
-      <p class="muted">
-        Flux temps réel :
-        <b id="wsState">En attente</b>
-      </p>
-
-      <p class="muted">
-        Trading réel :
-        <b>confirmation manuelle</b>
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= MARKETS ================= -->
-
-<section id="markets" class="page">
-
-  <h1>Marchés</h1>
-
-  <p class="muted">
-    Prix en temps réel.
-  </p>
-
-  <div
-    class="card marketgrid grid"
-    style="margin-top:18px"
-  >
-
-    <div class="list" id="assetList">
-
-      <div class="empty">
-        Chargement des marchés…
-      </div>
-
-    </div>
-
-    <div class="chart">
-
-      <div class="charthead">
+  <!-- ==============================
+       SIDEBAR
+  ============================== -->
+
+  <aside class="side">
+
+    <button
+      class="navbtn active"
+      data-page="dashboard"
+      type="button"
+    >
+      ⌂ Dashboard
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="markets"
+      type="button"
+    >
+      ◈ Marchés
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="trading"
+      type="button"
+    >
+      ↗ Trading
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="positions"
+      type="button"
+    >
+      ▣ Positions
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="history"
+      type="button"
+    >
+      ◷ Historique
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="bots"
+      type="button"
+    >
+      ⚙ Bots
+    </button>
+
+    <button
+      class="navbtn"
+      data-page="settings"
+      type="button"
+    >
+      ⚙ Paramètres
+    </button>
+
+    <button
+      id="logout"
+      class="navbtn"
+      type="button"
+    >
+      ⇥ Déconnexion
+    </button>
+
+  </aside>
+
+
+  <!-- ==============================
+       MAIN
+  ============================== -->
+
+  <main class="content">
+
+
+    <!-- ==============================
+         DASHBOARD
+    ============================== -->
+
+    <section
+      id="dashboard"
+      class="page active"
+    >
+
+      <div class="between row">
 
         <div>
 
-          <h2 id="chartTitle">—</h2>
+          <h1>
+            Dashboard
+          </h1>
 
-          <span id="chartPrice" class="muted">
-            —
-          </span>
+          <p class="muted">
+            Vue générale de votre compte Deriv.
+          </p>
 
         </div>
 
-        <span id="chartTick" class="muted">
-          —
-        </span>
+        <div
+          id="accountBadge"
+          class="notice"
+        >
+          Compte : —
+        </div>
 
       </div>
 
-      <div class="chartbox">
 
-        <svg
-          id="chart"
-          class="chartline"
-          viewBox="0 0 900 380"
-          preserveAspectRatio="none"
-        ></svg>
+      <div class="grid stats">
+
+        <div class="card">
+
+          <div class="label">
+            Solde
+          </div>
+
+          <div
+            id="balance"
+            class="big"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="label">
+            Devise
+          </div>
+
+          <div
+            id="currency"
+            class="big"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="label">
+            Positions
+          </div>
+
+          <div
+            id="positionCount"
+            class="big"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="label">
+            P/L ouvert
+          </div>
+
+          <div
+            id="openProfit"
+            class="big"
+          >
+            —
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
 
-    <div class="card" style="padding:14px">
+      <div class="grid tradegrid">
 
-      <h2>Actif</h2>
+        <div class="card">
 
-      <p id="selectedName" class="muted">
-        Sélectionnez un marché.
+          <h2>
+            Marché actif
+          </h2>
+
+          <div
+            id="dashSymbol"
+            class="big"
+          >
+            —
+          </div>
+
+          <p
+            id="dashPrice"
+            class="muted"
+          >
+            —
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <h2>
+            État
+          </h2>
+
+          <p class="muted">
+
+            Flux temps réel :
+            <b id="wsState">
+              En attente
+            </b>
+
+          </p>
+
+          <p class="muted">
+
+            Trading réel :
+            <b>
+              confirmation manuelle
+            </b>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         MARKETS
+    ============================== -->
+
+    <section
+      id="markets"
+      class="page"
+    >
+
+      <h1>
+        Marchés
+      </h1>
+
+      <p class="muted">
+        Prix en temps réel.
       </p>
 
-      <button
-        id="useTrade"
-        class="btn primary"
-        style="width:100%"
-        type="button"
+
+      <div
+        class="card marketgrid grid"
+        style="margin-top:18px"
       >
-        Trader cet actif
-      </button>
 
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= TRADING ================= -->
-
-<section id="trading" class="page">
-
-  <h1>Trading</h1>
-
-  <p class="muted">
-    Préparez une proposition avant toute opération.
-  </p>
-
-  <div
-    class="grid tradegrid"
-    style="margin-top:18px"
-  >
-
-    <div class="card">
-
-      <h2>Ordre</h2>
-
-      <div class="field">
-
-        <label>Actif</label>
-
-        <select id="tradeSymbol"></select>
-
-      </div>
-
-      <div class="field">
-
-        <label>Type de contrat</label>
-
-        <select id="contractType">
-
-          <option value="CALL">
-            Rise / CALL
-          </option>
-
-          <option value="PUT">
-            Fall / PUT
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="field">
-
-        <label>Mise</label>
-
-        <input
-          id="amount"
-          class="input"
-          type="number"
-          min="0.35"
-          step="0.01"
-          value="1"
+        <div
+          class="list"
+          id="assetList"
         >
 
-      </div>
+          <div class="empty">
+            Chargement des marchés…
+          </div>
 
-      <div class="field">
+        </div>
 
-        <label>Durée en secondes</label>
 
-        <input
-          id="duration"
-          class="input"
-          type="number"
-          min="1"
-          step="1"
-          value="60"
+        <div class="chart">
+
+          <div class="charthead">
+
+            <div>
+
+              <h2 id="chartTitle">
+                —
+              </h2>
+
+              <span
+                id="chartPrice"
+                class="muted"
+              >
+                —
+              </span>
+
+            </div>
+
+            <span
+              id="chartTick"
+              class="muted"
+            >
+              —
+            </span>
+
+          </div>
+
+
+          <div class="chartbox">
+
+            <svg
+              id="chart"
+              class="chartline"
+              viewBox="0 0 900 380"
+              preserveAspectRatio="none"
+            ></svg>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="card"
+          style="padding:14px"
         >
 
+          <h2>
+            Actif
+          </h2>
+
+          <p
+            id="selectedName"
+            class="muted"
+          >
+            Sélectionnez un marché.
+          </p>
+
+          <button
+            id="useTrade"
+            class="btn primary"
+            type="button"
+            style="width:100%"
+          >
+            Trader cet actif
+          </button>
+
+        </div>
+
       </div>
 
-      <button
-        id="proposalBtn"
-        class="btn primary"
-        type="button"
+    </section>
+
+
+    <!-- ==============================
+         TRADING
+    ============================== -->
+
+    <section
+      id="trading"
+      class="page"
+    >
+
+      <h1>
+        Trading
+      </h1>
+
+      <p class="muted">
+        Préparez une proposition avant toute opération.
+      </p>
+
+
+      <div
+        class="grid tradegrid"
+        style="margin-top:18px"
       >
-        Obtenir une proposition
-      </button>
 
-      <div id="proposalBox" class="notice">
-        Aucune proposition.
+        <div class="card">
+
+          <h2>
+            Ordre
+          </h2>
+
+
+          <div class="field">
+
+            <label>
+              Actif
+            </label>
+
+            <select id="tradeSymbol">
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Type de contrat
+            </label>
+
+            <select id="contractType">
+
+              <option value="CALL">
+                Rise / CALL
+              </option>
+
+              <option value="PUT">
+                Fall / PUT
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Mise
+            </label>
+
+            <input
+              id="amount"
+              class="input"
+              type="number"
+              min="0.35"
+              step="0.01"
+              value="1"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Durée en secondes
+            </label>
+
+            <input
+              id="duration"
+              class="input"
+              type="number"
+              min="1"
+              step="1"
+              value="60"
+            >
+
+          </div>
+
+
+          <button
+            id="proposalBtn"
+            class="btn primary"
+            type="button"
+          >
+            Obtenir une proposition
+          </button>
+
+
+          <div
+            id="proposalBox"
+            class="notice"
+          >
+            Aucune proposition.
+          </div>
+
+
+          <button
+            id="buyBtn"
+            class="btn green"
+            type="button"
+            style="width:100%;margin-top:10px;display:none"
+          >
+            Confirmer l'achat
+          </button>
+
+        </div>
+
+
+        <div class="card">
+
+          <h2>
+            Protection
+          </h2>
+
+          <p class="muted">
+
+            ATLAS demande une confirmation
+            explicite avant l'achat.
+
+          </p>
+
+          <div class="notice danger">
+
+            Le trading réel comporte un risque
+            de perte. Testez d'abord avec
+            un compte démo.
+
+          </div>
+
+        </div>
+
       </div>
 
-      <button
-        id="buyBtn"
-        class="btn green"
-        style="width:100%;margin-top:10px;display:none"
-        type="button"
+    </section><!-- ==============================
+         POSITIONS
+    ============================== -->
+
+    <section
+      id="positions"
+      class="page"
+    >
+
+      <h1>
+        Positions
+      </h1>
+
+      <p class="muted">
+        Contrats ouverts du compte.
+      </p>
+
+
+      <div
+        class="card"
+        style="margin-top:18px"
       >
-        Confirmer l'achat
-      </button>
 
-    </div>
+        <table class="table">
 
-    <div class="card">
+          <thead>
 
-      <h2>Protection</h2>
+            <tr>
 
-      <p class="muted">
-        ATLAS demande une confirmation explicite
-        avant l'achat.
-      </p>
+              <th>
+                Contrat
+              </th>
 
-      <div class="notice danger">
-        Le trading réel comporte un risque de perte.
-        Testez d'abord avec un compte démo.
+              <th>
+                Actif
+              </th>
+
+              <th>
+                Mise
+              </th>
+
+              <th>
+                P/L
+              </th>
+
+              <th>
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="positionsBody">
+
+            <tr>
+
+              <td
+                colspan="5"
+                class="empty"
+              >
+                Aucune position.
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
       </div>
 
-    </div>
-
-  </div>
-
-</section>
+    </section>
 
 
-<!-- ================= POSITIONS ================= -->
+    <!-- ==============================
+         HISTORIQUE
+    ============================== -->
 
-<section id="positions" class="page">
+    <section
+      id="history"
+      class="page"
+    >
 
-  <h1>Positions</h1>
-
-  <p class="muted">
-    Contrats ouverts du compte.
-  </p>
-
-  <div class="card" style="margin-top:18px">
-
-    <table class="table">
-
-      <thead>
-
-        <tr>
-          <th>Contrat</th>
-          <th>Actif</th>
-          <th>Mise</th>
-          <th>P/L</th>
-          <th>Action</th>
-        </tr>
-
-      </thead>
-
-      <tbody id="positionsBody">
-
-        <tr>
-          <td colspan="5" class="empty">
-            Aucune position.
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</section>
-
-
-<!-- ================= HISTORY ================= -->
-
-<section id="history" class="page">
-
-  <h1>Historique</h1>
-
-  <p class="muted">
-    Historique des opérations.
-  </p>
-
-  <div class="card" style="margin-top:18px">
-
-    <div id="historyBox" class="empty">
-      L'historique sera synchronisé avec le compte Deriv.
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= BOTS ================= -->
-
-<section id="bots" class="page">
-
-  <h1>Bots</h1>
-
-  <p class="muted">
-    Espace réservé à une prochaine mise à jour.
-  </p>
-
-  <div class="botempty">
-
-    <div>
-
-      <h2>🤖 ATLAS Bots</h2>
+      <h1>
+        Historique
+      </h1>
 
       <p class="muted">
-        Le constructeur de bots sera ajouté séparément.
+        Historique des opérations.
       </p>
 
-      <p class="muted">
-        Aucun bot ne s'exécute dans cette version.
-      </p>
 
-    </div>
+      <div
+        class="card"
+        style="margin-top:18px"
+      >
 
-  </div>
+        <div
+          id="historyBox"
+          class="empty"
+        >
+          L'historique sera synchronisé
+          avec le compte Deriv.
+        </div>
 
-</section>
-
-
-<!-- ================= SETTINGS ================= -->
-
-<section id="settings" class="page">
-
-  <h1>Paramètres</h1>
-
-  <p class="muted">
-    Configuration de votre espace ATLAS.
-  </p>
-
-  <div
-    class="grid tradegrid"
-    style="margin-top:18px"
-  >
-
-    <div class="card">
-
-      <h2>Compte actif</h2>
-
-      <div id="settingsAccount" class="big">
-        —
       </div>
 
-    </div>
+    </section>
 
-    <div class="card">
 
-      <h2>Sécurité</h2>
+    <!-- ==============================
+         BOTS
+    ============================== -->
+
+    <section
+      id="bots"
+      class="page"
+    >
+
+      <h1>
+        Bots
+      </h1>
 
       <p class="muted">
-        Le PAT n'est pas affiché dans le navigateur.
+        Espace réservé aux futures mises à jour.
       </p>
 
-    </div>
 
-  </div>
+      <div class="botempty">
 
-</section>
+        <div>
 
-</main>
+          <h2>
+            🤖 ATLAS Bots
+          </h2>
+
+          <p class="muted">
+            Le constructeur de bots sera ajouté
+            séparément.
+          </p>
+
+          <p class="muted">
+            Aucun bot ne s'exécute actuellement.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         PARAMÈTRES
+    ============================== -->
+
+    <section
+      id="settings"
+      class="page"
+    >
+
+      <h1>
+        Paramètres
+      </h1>
+
+      <p class="muted">
+        Configuration de votre espace ATLAS.
+      </p>
+
+
+      <div
+        class="grid tradegrid"
+        style="margin-top:18px"
+      >
+
+        <div class="card">
+
+          <h2>
+            Compte actif
+          </h2>
+
+          <div
+            id="settingsAccount"
+            class="big"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <h2>
+            Sécurité
+          </h2>
+
+          <p class="muted">
+            Le Personal Access Token n'est
+            jamais affiché dans l'interface.
+          </p>
+
+          <p class="muted">
+            La session ATLAS est utilisée
+            pour communiquer avec Deriv.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
 </div>
+
 </div>
 
+
+<!-- ==============================
+     JAVASCRIPT
+============================== -->
 
 <script>
 
-/* =====================================================
-   ATLAS — JAVASCRIPT
-===================================================== */
-
 "use strict";
 
+/* ==============================
+   VARIABLES
+============================== */
+
 let accountId = null;
+
 let selectedSymbol = "1HZ100V";
-let assets = [];
-let ticks = [];
+
 let proposalId = null;
 
+let ticks = [];
 
-/* =====================================================
+let assets = [];
+
+let connected = false;
+
+
+/* ==============================
    UTILITAIRE
-===================================================== */
+============================== */
 
-function $(id){
-  return document.getElementById(id);
-}
+const $ = id =>
+  document.getElementById(id);
+
 
 function fmt(number, decimals = 2){
 
-  const n = Number(number);
+  const value = Number(number);
 
-  if(!Number.isFinite(n)){
+  if(!Number.isFinite(value)){
     return "—";
   }
 
-  return n.toLocaleString("fr-FR",{
-    minimumFractionDigits:decimals,
-    maximumFractionDigits:decimals
-  });
+  return value.toLocaleString(
+    "fr-FR",
+    {
+      minimumFractionDigits:decimals,
+      maximumFractionDigits:decimals
+    }
+  );
+
 }
 
 
-/* =====================================================
+/* ==============================
    CONNEXION UI
-===================================================== */
+============================== */
 
 function setConnected(on){
 
-  $("dot").classList.toggle("on",on);
+  connected = Boolean(on);
+
+  $("dot")
+    .classList
+    .toggle("on", connected);
 
   $("connText").textContent =
-    on
+    connected
       ? "Connecté à Deriv"
       : "Non connecté";
 
 }
 
 
-/* =====================================================
+/* ==============================
    NAVIGATION
-===================================================== */
+============================== */
 
-function showPage(name){
+function page(name){
 
   document
     .querySelectorAll(".page")
-    .forEach(el => {
-      el.classList.remove("active");
+    .forEach(element => {
+
+      element.classList.remove("active");
+
     });
+
 
   document
     .querySelectorAll(".navbtn[data-page]")
-    .forEach(el => {
-      el.classList.remove("active");
+    .forEach(element => {
+
+      element.classList.remove("active");
+
     });
+
 
   const target = $(name);
 
@@ -1056,10 +1399,12 @@ function showPage(name){
     target.classList.add("active");
   }
 
+
   const button =
     document.querySelector(
       `.navbtn[data-page="${name}"]`
     );
+
 
   if(button){
     button.classList.add("active");
@@ -1072,43 +1417,79 @@ document
   .querySelectorAll(".navbtn[data-page]")
   .forEach(button => {
 
-    button.addEventListener("click",function(){
-
-      showPage(this.dataset.page);
-
-    });
+    button.addEventListener(
+      "click",
+      () => page(button.dataset.page)
+    );
 
   });
 
 
-/* =====================================================
-   AFFICHER LE WORKSPACE
-===================================================== */
+/* ==============================
+   API HELPER
+============================== */
 
-function openWorkspace(){
+async function api(url, options = {}){
 
-  $("login").style.display = "none";
+  const response =
+    await fetch(
+      url,
+      {
+        credentials:"same-origin",
+        ...options
+      }
+    );
 
-  $("workspace").style.display = "grid";
 
-  setConnected(true);
+  const text =
+    await response.text();
 
-  showPage("dashboard");
+
+  let data = null;
+
+
+  try{
+
+    data = text
+      ? JSON.parse(text)
+      : {};
+
+  }catch{
+
+    throw new Error(
+      "Le serveur a renvoyé une réponse invalide."
+    );
+
+  }
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data.message ||
+      "Erreur serveur."
+    );
+
+  }
+
+
+  return data;
 
 }
 
 
-/* =====================================================
-   CONNEXION PAT
-===================================================== */
+/* ==============================
+   LOGIN PAT
+============================== */
 
 async function login(){
 
   const token =
     $("token").value.trim();
 
+
   $("loginError").textContent = "";
-  $("loginSuccess").textContent = "";
+
 
   if(!token){
 
@@ -1120,144 +1501,83 @@ async function login(){
   }
 
 
-  $("loginBtn").disabled = true;
+  const button =
+    $("loginBtn");
 
-  $("loginBtn").textContent =
+
+  button.disabled = true;
+
+  button.textContent =
     "Connexion…";
 
 
   try{
 
-    const response =
-      await fetch(
+    const data =
+      await api(
         "/auth/token",
         {
           method:"POST",
 
           headers:{
-            "Content-Type":"application/json",
-            "Accept":"application/json"
+            "Content-Type":
+              "application/json"
           },
 
           body:JSON.stringify({
-            token:token
+            token
           })
         }
       );
 
 
-    /*
-      On lit d'abord la réponse comme texte.
-      Cela évite l'erreur :
-      Unexpected token '<'
-    */
-
-    const raw =
-      await response.text();
-
-    let data = null;
-
-    try{
-
-      data =
-        raw
-          ? JSON.parse(raw)
-          : null;
-
-    }catch(parseError){
-
-      console.error(
-        "Réponse serveur non JSON:",
-        raw
-      );
-
-      throw new Error(
-        "Le serveur ATLAS a renvoyé une réponse invalide."
-      );
-
-    }
-
-
-    if(!response.ok){
+    if(
+      !data ||
+      data.success !== true
+    ){
 
       throw new Error(
         data?.message ||
-        "Connexion refusée par le serveur."
+        "Connexion impossible."
       );
 
     }
 
-
-    if(!data || !data.success){
-
-      throw new Error(
-        data?.message ||
-        "Impossible de connecter le compte."
-      );
-
-    }
-
-
-    /*
-      Connexion réussie
-    */
 
     $("token").value = "";
 
-    $("loginSuccess").textContent =
-      "✓ Connexion réussie.";
 
-    accountId =
-      data.accounts?.[0]?.loginid ||
-      data.accounts?.[0]?.account_id ||
-      null;
+    $("login").style.display =
+      "none";
 
 
-    if(accountId){
-
-      $("accountBadge").textContent =
-        "Compte : " + accountId;
-
-      $("settingsAccount").textContent =
-        accountId;
-
-    }
+    $("workspace").style.display =
+      "grid";
 
 
-    /*
-      Afficher immédiatement le dashboard
-    */
-
-    openWorkspace();
+    setConnected(true);
 
 
-    /*
-      Charger les données disponibles
-    */
+    await loadAccount();
 
-    loadAccounts(data.accounts);
 
-    loadMarkets();
+    await loadMarkets();
 
 
   }catch(error){
 
-    console.error(
-      "ATLAS login error:",
-      error
-    );
+    console.error(error);
+
 
     $("loginError").textContent =
       error.message ||
-      "Erreur pendant la connexion.";
-
-    setConnected(false);
+      "Connexion impossible.";
 
   }finally{
 
-    $("loginBtn").disabled = false;
+    button.disabled = false;
 
-    $("loginBtn").textContent =
+    button.textContent =
       "Se connecter";
 
   }
@@ -1265,101 +1585,1523 @@ async function login(){
 }
 
 
-/* =====================================================
-   BOUTON CONNEXION
-===================================================== */
+/* ==============================
+   BOUTON LOGIN
+============================== */
 
-$("loginBtn").addEventListener(
-  "click",
-  login
-);
+$("loginBtn")
+  .addEventListener(
+    "click",
+    login
+  );
 
 
-/* =====================================================
-   TOUCHE ENTRÉE
-===================================================== */
+$("token")
+  .addEventListener(
+    "keydown",
+    event => {
 
-$("token").addEventListener(
-  "keydown",
-  function(event){
+      if(event.key === "Enter"){
+        login();
+      }
 
-    if(event.key === "Enter"){
-      event.preventDefault();
-      login();
+    }
+  );
+
+
+/* ==============================
+   VÉRIFICATION SESSION
+============================== */
+
+async function checkSession(){
+
+  try{
+
+    const data =
+      await api(
+        "/api/auth/status"
+      );
+
+
+    if(data.connected){
+
+      $("login").style.display =
+        "none";
+
+      $("workspace").style.display =
+        "grid";
+
+      setConnected(true);
+
+      await loadAccount();
+
+      await loadMarkets();
+
+    }else{
+
+      setConnected(false);
+
     }
 
-  }
-);
+  }catch(error){
 
+    console.error(
+      "Session:",
+      error
+    );
 
-/* =====================================================
-   COMPTES
-===================================================== */
-
-function loadAccounts(accounts){
-
-  if(!accounts){
-    return;
-  }
-
-  let list = accounts;
-
-  if(!Array.isArray(list)){
-    list = [list];
-  }
-
-  if(!list.length){
-    return;
-  }
-
-  const account =
-    list[0];
-
-  const id =
-    account.loginid ||
-    account.account_id ||
-    account.id;
-
-  const balance =
-    account.balance;
-
-  const currency =
-    account.currency;
-
-  if(id){
-
-    accountId = id;
-
-    $("accountBadge").textContent =
-      "Compte : " + id;
-
-    $("settingsAccount").textContent =
-      id;
-
-  }
-
-  if(balance !== undefined){
-
-    $("balance").textContent =
-      fmt(balance);
-
-  }
-
-  if(currency){
-
-    $("currency").textContent =
-      currency;
+    setConnected(false);
 
   }
 
 }
 
 
-/* =====================================================
+/* ==============================
+   COMPTE
+============================== */
+
+async function loadAccount(){
+
+  try{
+
+    const data =
+      await api(
+        "/api/deriv/accounts"
+      );
+
+
+    const accounts =
+      Array.isArray(data.accounts)
+        ? data.accounts
+        : [];
+
+
+    if(!accounts.length){
+
+      $("accountBadge").textContent =
+        "Compte : —";
+
+      return;
+
+    }
+
+
+    const account =
+      accounts[0];
+
+
+    accountId =
+      account.loginid ||
+      account.account_id ||
+      account.id ||
+      null;
+
+
+    const balance =
+      account.balance ??
+      account.available_balance ??
+      null;
+
+
+    const currency =
+      account.currency ||
+      "—";
+
+
+    $("balance").textContent =
+      balance === null
+        ? "—"
+        : fmt(balance);
+
+
+    $("currency").textContent =
+      currency;
+
+
+    $("accountBadge").textContent =
+      "Compte : " +
+      (accountId || "—");
+
+
+    $("settingsAccount").textContent =
+      accountId || "—";
+
+
+  }catch(error){
+
+    console.error(
+      "Compte:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==============================
    MARCHÉS
-===================================================== */
+============================== */
 
 async function loadMarkets(){
 
-  /*
-    Liste de
+  const list =
+    $("assetList");
+
+
+  list.innerHTML =
+    '<div class="empty">Chargement des marchés…</div>';
+
+
+  try{
+
+    const data =
+      await api(
+        "/api/deriv/active-symbols"
+      );
+
+
+    assets =
+      Array.isArray(data.symbols)
+        ? data.symbols
+        : [];
+
+
+    if(!assets.length){
+
+      list.innerHTML =
+        '<div class="empty">Aucun marché disponible.</div>';
+
+      return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    assets.forEach(
+      (asset,index) => {
+
+        const symbol =
+          asset.symbol ||
+          asset.code ||
+          "";
+
+
+        if(!symbol){
+          return;
+        }
+
+
+        const name =
+          asset.display_name ||
+          asset.name ||
+          symbol;
+
+
+        const item =
+          document.createElement("div");
+
+
+        item.className =
+          "asset" +
+          (
+            symbol === selectedSymbol
+              ? " sel"
+              : ""
+          );
+
+
+        item.innerHTML = `
+          <strong>${escapeHtml(name)}</strong>
+          <span>${escapeHtml(symbol)}</span>
+        `;
+
+
+        item.addEventListener(
+          "click",
+          () => selectAsset(
+            symbol,
+            name
+          )
+        );
+
+
+        list.appendChild(item);
+
+
+        if(
+          index === 0 &&
+          !assets.some(
+            x =>
+              (
+                x.symbol ||
+                x.code
+              ) === selectedSymbol
+          )
+        ){
+
+          selectedSymbol =
+            symbol;
+
+        }
+
+      }
+    );
+
+
+    const current =
+      assets.find(
+        x =>
+          (
+            x.symbol ||
+            x.code
+          ) === selectedSymbol
+      );
+
+
+    if(current){
+
+      selectAsset(
+        current.symbol ||
+        current.code,
+        current.display_name ||
+        current.name ||
+        current.symbol
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Marchés:",
+      error
+    );
+
+
+    list.innerHTML =
+      `<div class="empty">${escapeHtml(error.message)}</div>`;
+
+  }
+
+}
+
+
+/* ==============================
+   PROTECTION HTML
+============================== */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ==============================
+   SÉLECTION ACTIF
+============================== */
+
+function selectAsset(symbol,name){
+
+  selectedSymbol =
+    symbol;
+
+
+  $("chartTitle").textContent =
+    name || symbol;
+
+
+  $("selectedName").textContent =
+    `${name || symbol} (${symbol})`;
+
+
+  $("dashSymbol").textContent =
+    symbol;
+
+
+  $("chartPrice").textContent =
+    "Connexion au flux…";
+
+
+  $("chartTick").textContent =
+    "—";
+
+
+  const select =
+    $("tradeSymbol");
+
+
+  if(select){
+
+    select.value =
+      symbol;
+
+  }
+
+
+  document
+    .querySelectorAll(".asset")
+    .forEach(element => {
+
+      element.classList.remove("sel");
+
+    });
+
+
+  document
+    .querySelectorAll(".asset")
+    .forEach(element => {
+
+      const span =
+        element.querySelector("span");
+
+      if(
+        span &&
+        span.textContent === symbol
+      ){
+
+        element.classList.add("sel");
+
+      }
+
+    });
+
+
+  ticks = [];
+
+  drawChart();
+
+
+  loadTicks(symbol);
+
+}/* ==============================
+   TICKS
+============================== */
+
+async function loadTicks(symbol){
+
+  if(!symbol){
+    return;
+  }
+
+  try{
+
+    const data =
+      await api(
+        "/api/deriv/ticks/" +
+        encodeURIComponent(symbol)
+      );
+
+
+    const prices =
+      Array.isArray(data.ticks)
+        ? data.ticks
+        : [];
+
+
+    ticks =
+      prices
+        .map(item =>
+          Number(
+            item.quote ??
+            item.price ??
+            item
+          )
+        )
+        .filter(
+          value =>
+            Number.isFinite(value)
+        )
+        .slice(-120);
+
+
+    if(ticks.length){
+
+      const price =
+        ticks[ticks.length - 1];
+
+
+      updatePrice(price);
+
+      drawChart();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Ticks:",
+      error
+    );
+
+    $("chartPrice").textContent =
+      "Flux indisponible";
+
+  }
+
+}
+
+
+/* ==============================
+   PRIX
+============================== */
+
+function updatePrice(price){
+
+  const formatted =
+    fmt(price,5);
+
+
+  $("chartPrice").textContent =
+    formatted;
+
+
+  $("dashPrice").textContent =
+    formatted;
+
+
+  $("chartTick").textContent =
+    "Temps réel";
+
+}
+
+
+/* ==============================
+   GRAPHIQUE
+============================== */
+
+function drawChart(){
+
+  const svg =
+    $("chart");
+
+
+  if(!svg){
+    return;
+  }
+
+
+  svg.innerHTML = "";
+
+
+  if(ticks.length < 2){
+
+    svg.innerHTML = `
+      <text
+        x="450"
+        y="190"
+        text-anchor="middle"
+        fill="#65748b"
+        font-size="14"
+      >
+        En attente des prix…
+      </text>
+    `;
+
+    return;
+
+  }
+
+
+  const width = 900;
+
+  const height = 380;
+
+  const padding = 25;
+
+
+  const min =
+    Math.min(...ticks);
+
+
+  const max =
+    Math.max(...ticks);
+
+
+  const range =
+    max - min || 1;
+
+
+  const points =
+    ticks.map(
+      (price,index) => {
+
+        const x =
+          padding +
+          (
+            index /
+            (ticks.length - 1)
+          ) *
+          (
+            width -
+            padding * 2
+          );
+
+
+        const y =
+          height -
+          padding -
+          (
+            (price - min) /
+            range
+          ) *
+          (
+            height -
+            padding * 2
+          );
+
+
+        return `${x},${y}`;
+
+      }
+    );
+
+
+  const polyline =
+    document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "polyline"
+    );
+
+
+  polyline.setAttribute(
+    "points",
+    points.join(" ")
+  );
+
+
+  polyline.setAttribute(
+    "fill",
+    "none"
+  );
+
+
+  polyline.setAttribute(
+    "stroke",
+    "#22d3ee"
+  );
+
+
+  polyline.setAttribute(
+    "stroke-width",
+    "3"
+  );
+
+
+  polyline.setAttribute(
+    "vector-effect",
+    "non-scaling-stroke"
+  );
+
+
+  svg.appendChild(
+    polyline
+  );
+
+}
+
+
+/* ==============================
+   TRADING — ACTIF
+============================== */
+
+function fillTradeSymbols(){
+
+  const select =
+    $("tradeSymbol");
+
+
+  if(!select){
+    return;
+  }
+
+
+  select.innerHTML = "";
+
+
+  assets.forEach(
+    asset => {
+
+      const symbol =
+        asset.symbol ||
+        asset.code;
+
+
+      if(!symbol){
+        return;
+      }
+
+
+      const option =
+        document.createElement("option");
+
+
+      option.value =
+        symbol;
+
+
+      option.textContent =
+        asset.display_name ||
+        asset.name ||
+        symbol;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  if(selectedSymbol){
+
+    select.value =
+      selectedSymbol;
+
+  }
+
+}
+
+
+$("tradeSymbol")
+  ?.addEventListener(
+    "change",
+    event => {
+
+      selectedSymbol =
+        event.target.value;
+
+
+      loadTicks(
+        selectedSymbol
+      );
+
+    }
+  );
+
+
+/* ==============================
+   PROPOSITION
+============================== */
+
+$("proposalBtn")
+  ?.addEventListener(
+    "click",
+    async () => {
+
+      const symbol =
+        $("tradeSymbol").value;
+
+
+      const amount =
+        Number(
+          $("amount").value
+        );
+
+
+      const duration =
+        Number(
+          $("duration").value
+        );
+
+
+      const contractType =
+        $("contractType").value;
+
+
+      if(!symbol){
+
+        $("proposalBox").textContent =
+          "Sélectionnez un actif.";
+
+        return;
+
+      }
+
+
+      if(
+        !Number.isFinite(amount) ||
+        amount <= 0
+      ){
+
+        $("proposalBox").textContent =
+          "Mise invalide.";
+
+        return;
+
+      }
+
+
+      if(
+        !Number.isFinite(duration) ||
+        duration < 1
+      ){
+
+        $("proposalBox").textContent =
+          "Durée invalide.";
+
+        return;
+
+      }
+
+
+      const button =
+        $("proposalBtn");
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "Préparation…";
+
+
+      $("buyBtn").style.display =
+        "none";
+
+
+      proposalId =
+        null;
+
+
+      try{
+
+        const data =
+          await api(
+            "/api/deriv/proposal",
+            {
+              method:"POST",
+
+              headers:{
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:JSON.stringify({
+                symbol,
+                amount,
+                duration,
+                contract_type:
+                  contractType
+              })
+            }
+          );
+
+
+        proposalId =
+          data.proposal_id ||
+          data.id ||
+          null;
+
+
+        $("proposalBox").textContent =
+          data.message ||
+          (
+            data.payout
+              ? `Proposition reçue — paiement potentiel : ${fmt(data.payout)}`
+              : "Proposition reçue."
+          );
+
+
+        if(proposalId){
+
+          $("buyBtn").style.display =
+            "block";
+
+        }
+
+      }catch(error){
+
+        console.error(
+          "Proposal:",
+          error
+        );
+
+
+        $("proposalBox").textContent =
+          error.message ||
+          "Impossible d'obtenir la proposition.";
+
+      }finally{
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Obtenir une proposition";
+
+      }
+
+    }
+  );
+
+
+/* ==============================
+   ACHAT
+============================== */
+
+$("buyBtn")
+  ?.addEventListener(
+    "click",
+    async () => {
+
+      if(!proposalId){
+
+        $("proposalBox").textContent =
+          "Aucune proposition valide.";
+
+        return;
+
+      }
+
+
+      const confirmed =
+        window.confirm(
+          "Confirmer l'achat du contrat ?\n\nCette opération peut utiliser des fonds réels."
+        );
+
+
+      if(!confirmed){
+        return;
+      }
+
+
+      const button =
+        $("buyBtn");
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "Achat…";
+
+
+      try{
+
+        const data =
+          await api(
+            "/api/deriv/buy",
+            {
+              method:"POST",
+
+              headers:{
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:JSON.stringify({
+                proposal_id:
+                  proposalId
+              })
+            }
+          );
+
+
+        $("proposalBox").textContent =
+          data.message ||
+          "Contrat acheté.";
+
+
+        proposalId =
+          null;
+
+
+        button.style.display =
+          "none";
+
+
+        await loadAccount();
+
+
+        await loadPositions();
+
+
+      }catch(error){
+
+        console.error(
+          "Buy:",
+          error
+        );
+
+
+        $("proposalBox").textContent =
+          error.message ||
+          "Achat impossible.";
+
+      }finally{
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Confirmer l'achat";
+
+      }
+
+    }
+  );
+
+
+/* ==============================
+   POSITIONS
+============================== */
+
+async function loadPositions(){
+
+  try{
+
+    const data =
+      await api(
+        "/api/deriv/positions"
+      );
+
+
+    const positions =
+      Array.isArray(data.positions)
+        ? data.positions
+        : [];
+
+
+    $("positionCount").textContent =
+      positions.length;
+
+
+    const body =
+      $("positionsBody");
+
+
+    if(!positions.length){
+
+      body.innerHTML = `
+        <tr>
+          <td
+            colspan="5"
+            class="empty"
+          >
+            Aucune position.
+          </td>
+        </tr>
+      `;
+
+      $("openProfit").textContent =
+        "0";
+
+      return;
+
+    }
+
+
+    let totalProfit = 0;
+
+
+    body.innerHTML = "";
+
+
+    positions.forEach(
+      position => {
+
+        const profit =
+          Number(
+            position.profit ??
+            position.pnl ??
+            0
+          );
+
+
+        if(Number.isFinite(profit)){
+          totalProfit += profit;
+        }
+
+
+        const tr =
+          document.createElement("tr");
+
+
+        tr.innerHTML = `
+          <td>
+            ${escapeHtml(
+              position.contract_id ||
+              position.id ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              position.symbol ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${fmt(
+              position.buy_price ??
+              position.amount ??
+              0
+            )}
+          </td>
+
+          <td>
+            ${fmt(profit)}
+          </td>
+
+          <td>
+            <button
+              class="btn red"
+              type="button"
+            >
+              Fermer
+            </button>
+          </td>
+        `;
+
+
+        const closeButton =
+          tr.querySelector("button");
+
+
+        closeButton.addEventListener(
+          "click",
+          () =>
+            closePosition(
+              position.contract_id ||
+              position.id
+            )
+        );
+
+
+        body.appendChild(tr);
+
+      }
+    );
+
+
+    $("openProfit").textContent =
+      fmt(totalProfit);
+
+
+  }catch(error){
+
+    console.error(
+      "Positions:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   FERMER POSITION
+============================== */
+
+async function closePosition(contractId){
+
+  if(!contractId){
+    return;
+  }
+
+
+  const confirmed =
+    window.confirm(
+      "Voulez-vous fermer cette position ?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    await api(
+      "/api/deriv/close",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+          contract_id:
+            contractId
+        })
+      }
+    );
+
+
+    await loadPositions();
+
+    await loadAccount();
+
+
+  }catch(error){
+
+    alert(
+      error.message ||
+      "Impossible de fermer la position."
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   HISTORIQUE
+============================== */
+
+async function loadHistory(){
+
+  try{
+
+    const data =
+      await api(
+        "/api/deriv/history"
+      );
+
+
+    const history =
+      Array.isArray(data.history)
+        ? data.history
+        : [];
+
+
+    const box =
+      $("historyBox");
+
+
+    if(!history.length){
+
+      box.textContent =
+        "Aucune opération dans l'historique.";
+
+      return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    const table =
+      document.createElement("table");
+
+
+    table.className =
+      "table";
+
+
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Actif</th>
+          <th>Type</th>
+          <th>Montant</th>
+          <th>Résultat</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+
+
+    const tbody =
+      table.querySelector("tbody");
+
+
+    history.forEach(
+      item => {
+
+        const tr =
+          document.createElement("tr");
+
+
+        tr.innerHTML = `
+          <td>
+            ${escapeHtml(
+              item.contract_id ||
+              item.id ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.symbol ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.contract_type ||
+              item.type ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${fmt(
+              item.amount ??
+              item.buy_price ??
+              0
+            )}
+          </td>
+
+          <td>
+            ${fmt(
+              item.profit ??
+              item.pnl ??
+              0
+            )}
+          </td>
+        `;
+
+
+        tbody.appendChild(tr);
+
+      }
+    );
+
+
+    box.appendChild(table);
+
+
+  }catch(error){
+
+    console.error(
+      "Historique:",
+      error
+    );
+
+    $("historyBox").textContent =
+      "Historique indisponible.";
+
+  }
+
+}
+
+
+/* ==============================
+   BOUTON ACTIF → TRADING
+============================== */
+
+$("useTrade")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      page("trading");
+
+
+      const select =
+        $("tradeSymbol");
+
+
+      if(select){
+
+        select.value =
+          selectedSymbol;
+
+      }
+
+    }
+  );
+
+
+/* ==============================
+   RAFRAÎCHISSEMENT
+============================== */
+
+async function refreshWorkspace(){
+
+  if(!connected){
+    return;
+  }
+
+
+  await loadAccount();
+
+  await loadPositions();
+
+  await loadHistory();
+
+
+  if(selectedSymbol){
+
+    await loadTicks(
+      selectedSymbol
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   INITIALISATION
+============================== */
+
+async function init(){
+
+  fillTradeSymbols();
+
+  await checkSession();
+
+
+  if(connected){
+
+    fillTradeSymbols();
+
+    await loadPositions();
+
+    await loadHistory();
+
+  }
+
+}
+
+
+/* ==============================
+   RAFRAÎCHISSEMENT AUTOMATIQUE
+============================== */
+
+setInterval(
+  async () => {
+
+    if(!connected){
+      return;
+    }
+
+
+    try{
+
+      await loadAccount();
+
+      await loadPositions();
+
+    }catch(error){
+
+      console.error(
+        "Refresh:",
+        error
+      );
+
+    }
+
+  },
+  10000
+);
+
+
+/* ==============================
+   DÉCONNEXION
+============================== */
+
+$("logout")
+  ?.addEventListener(
+    "click",
+    async () => {
+
+      try{
+
+        await api(
+          "/auth/logout",
+          {
+            method:"POST"
+          }
+        );
+
+      }catch(error){
+
+        console.error(
+          "Logout:",
+          error
+        );
+
+      }
+
+
+      connected =
+        false;
+
+
+      accountId =
+        null;
+
+
+      proposalId =
+        null;
+
+
+      assets = [];
+
+      ticks = [];
+
+
+      $("workspace").style.display =
+        "none";
+
+
+      $("login").style.display =
+        "block";
+
+
+      $("token").value =
+        "";
+
+
+      $("loginError").textContent =
+        "";
+
+
+      $("balance").textContent =
+        "—";
+
+
+      $("currency").textContent =
+        "—";
+
+
+      $("positionCount").textContent =
+        "0";
+
+
+      $("openProfit").textContent =
+        "—";
+
+
+      setConnected(false);
+
+    }
+  );
+
+
+/* ==============================
+   DÉMARRAGE
+============================== */
+
+init();
+
+</script>
+
+</body>
+</html>
