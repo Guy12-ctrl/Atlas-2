@@ -1,29 +1,13 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<meta
-  name="theme-color"
-  content="#070b14"
->
-
-<title>
-  ATLAS — Trading Workspace
-</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b14">
+<title>ATLAS — Trading Workspace</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -32,15 +16,8 @@ body{
   font-family:Arial,Helvetica,sans-serif;
 }
 
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
 :root{
   --bg:#070b14;
@@ -56,48 +33,24 @@ button{
 
 .app{
   min-height:100vh;
-
   background-image:
-    linear-gradient(
-      #ffffff05 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      #ffffff05 1px,
-      transparent 1px
-    );
-
-  background-size:
-    44px 44px;
+    linear-gradient(#ffffff05 1px,transparent 1px),
+    linear-gradient(90deg,#ffffff05 1px,transparent 1px);
+  background-size:44px 44px;
 }
-
-/* =====================================================
-   TOP
-===================================================== */
 
 .top{
   height:68px;
-
-  border-bottom:
-    1px solid var(--border);
-
+  border-bottom:1px solid var(--border);
   background:#070b14ee;
-
   display:flex;
   align-items:center;
-
   padding:0 18px;
-
   gap:22px;
-
   position:sticky;
   top:0;
-
   z-index:20;
-
-  backdrop-filter:
-    blur(16px);
+  backdrop-filter:blur(16px);
 }
 
 .logo{
@@ -106,122 +59,73 @@ button{
 }
 
 .grad{
-  background:
-    linear-gradient(
-      90deg,
-      var(--accent),
-      var(--cyan)
-    );
-
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
   color:transparent;
-
   background-clip:text;
+  -webkit-background-clip:text;
 }
 
 .conn{
   margin-left:auto;
-
   font-size:12px;
-
   color:var(--muted);
-
   display:flex;
-
   align-items:center;
-
   gap:7px;
 }
 
 .dot{
   width:8px;
   height:8px;
-
   border-radius:50%;
-
   background:#64748b;
 }
 
 .dot.on{
   background:var(--green);
-
-  box-shadow:
-    0 0 10px var(--green);
+  box-shadow:0 0 10px var(--green);
 }
-
-/* =====================================================
-   LAYOUT
-===================================================== */
 
 .layout{
   display:grid;
-
-  grid-template-columns:
-    220px 1fr;
-
-  min-height:
-    calc(100vh - 68px);
+  grid-template-columns:220px 1fr;
+  min-height:calc(100vh - 68px);
 }
 
 .side{
-  border-right:
-    1px solid var(--border);
-
+  border-right:1px solid var(--border);
   padding:18px 12px;
-
   background:#080d17;
 }
 
 .navbtn{
   display:block;
-
   width:100%;
-
   text-align:left;
-
   padding:12px;
-
-  border:
-    1px solid transparent;
-
+  border:1px solid transparent;
   background:transparent;
-
   color:#9aa7ba;
-
   border-radius:10px;
-
   margin-bottom:6px;
 }
 
 .navbtn.active,
 .navbtn:hover{
   background:#111a29;
-
   color:white;
-
   border-color:#263249;
 }
 
 .content{
   padding:22px;
-
   max-width:1500px;
-
   width:100%;
-
   margin:auto;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* =====================================================
-   GENERAL
-===================================================== */
+.page{display:none}
+.page.active{display:block}
 
 h1{
   margin:0;
@@ -255,60 +159,39 @@ h2{
 
 .card{
   background:#0b1220dd;
-
-  border:
-    1px solid var(--border);
-
+  border:1px solid var(--border);
   border-radius:16px;
-
   padding:18px;
 }
 
 .label{
   font-size:11px;
-
   color:#75839a;
-
   text-transform:uppercase;
-
   letter-spacing:.08em;
 }
 
 .big{
   font-size:25px;
-
   font-weight:800;
-
   margin-top:8px;
 }
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
 .stats{
-  grid-template-columns:
-    repeat(4,1fr);
-
+  grid-template-columns:repeat(4,1fr);
   margin:18px 0;
 }
 
 .tradegrid{
-  grid-template-columns:
-    1fr 1fr;
+  grid-template-columns:1fr 1fr;
 }
 
 .notice{
   padding:11px;
-
   border-radius:9px;
-
   background:#101827;
-
   color:#aab7ca;
-
   font-size:12px;
-
   margin-top:10px;
 }
 
@@ -316,29 +199,19 @@ h2{
   color:#fca5a5;
 }
 
-/* =====================================================
-   MARKETS
-===================================================== */
-
 .marketgrid{
-  grid-template-columns:
-    280px 1fr 300px;
+  grid-template-columns:280px 1fr 300px;
 }
 
 .list{
   max-height:590px;
-
   overflow:auto;
 }
 
 .asset{
   padding:12px;
-
-  border-bottom:
-    1px solid #142033;
-
+  border-bottom:1px solid #142033;
   cursor:pointer;
-
   border-radius:9px;
 }
 
@@ -353,45 +226,31 @@ h2{
 
 .asset span{
   font-size:11px;
-
   color:var(--muted);
 }
 
 .chart{
   height:420px;
-
   display:flex;
-
   flex-direction:column;
 }
 
 .charthead{
   display:flex;
-
   justify-content:space-between;
-
   gap:10px;
-
   align-items:center;
 }
 
 .chartbox{
   flex:1;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   background:#080e18;
-
   border-radius:12px;
-
   margin-top:12px;
-
   position:relative;
-
   overflow:hidden;
 }
 
@@ -400,114 +259,81 @@ h2{
   height:100%;
 }
 
-/* =====================================================
-   INPUTS
-===================================================== */
-
 .field{
   margin:10px 0;
 }
 
 .field label{
   display:block;
-
   font-size:11px;
-
   color:#7f8da2;
-
   margin-bottom:6px;
 }
 
 .input,
 select{
   width:100%;
-
   padding:11px;
-
-  border:
-    1px solid #263249;
-
+  border:1px solid #263249;
   background:#080e18;
-
   color:white;
-
   border-radius:9px;
 }
 
 .btn{
   border:0;
-
   border-radius:9px;
-
   padding:11px 14px;
 }
 
 .primary{
   background:white;
-
   color:#07101a;
-
   font-weight:800;
+}
+
+.primary:disabled{
+  opacity:.6;
+  cursor:wait;
 }
 
 .green{
   background:#14532d;
-
   color:#bbf7d0;
 }
 
 .red{
   background:#451a1a;
-
   color:#fecaca;
 }
 
 .ghost{
   background:#111a29;
-
   color:white;
-
-  border:
-    1px solid #263249;
+  border:1px solid #263249;
 }
-
-/* =====================================================
-   TABLE
-===================================================== */
 
 .table{
   width:100%;
-
   border-collapse:collapse;
-
   font-size:12px;
 }
 
 .table th,
 .table td{
   text-align:left;
-
   padding:11px;
-
-  border-bottom:
-    1px solid #172236;
+  border-bottom:1px solid #172236;
 }
 
 .empty{
   padding:45px 15px;
-
   text-align:center;
-
   color:#65748b;
 }
 
-/* =====================================================
-   LOGIN
-===================================================== */
-
 .login{
   max-width:520px;
-
   margin:80px auto;
 }
 
@@ -521,42 +347,30 @@ select{
 
 .error{
   color:#fca5a5;
-
   font-size:12px;
-
   margin-top:10px;
 }
 
-/* =====================================================
-   BOTS
-===================================================== */
+.success{
+  color:#86efac;
+  font-size:12px;
+  margin-top:10px;
+}
 
 .botempty{
   min-height:430px;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   text-align:center;
-
-  border:
-    1px dashed #263249;
-
+  border:1px dashed #263249;
   border-radius:16px;
-
   background:#080e18;
 }
 
 .botempty h2{
   font-size:24px;
 }
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
 
 @media(max-width:1000px){
 
@@ -566,30 +380,21 @@ select{
 
   .side{
     display:flex;
-
     overflow:auto;
-
     border-right:0;
-
-    border-bottom:
-      1px solid var(--border);
-
+    border-bottom:1px solid var(--border);
     position:sticky;
-
     top:68px;
-
     z-index:10;
   }
 
   .navbtn{
     min-width:max-content;
-
     margin:0 4px;
   }
 
   .stats{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .marketgrid{
@@ -603,7 +408,6 @@ select{
   .tradegrid{
     grid-template-columns:1fr;
   }
-
 }
 
 @media(max-width:600px){
@@ -613,8 +417,7 @@ select{
   }
 
   .stats{
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns:1fr 1fr;
   }
 
   .top{
@@ -624,37 +427,23 @@ select{
   .big{
     font-size:20px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <div class="app">
 
-<!-- =====================================================
-     TOP BAR
-===================================================== -->
-
 <header class="top">
 
   <div class="logo">
-
-    <span class="grad">
-      AT
-    </span>LAS
-
+    <span class="grad">AT</span>LAS
   </div>
 
   <div class="conn">
 
-    <span
-      id="dot"
-      class="dot"
-    ></span>
+    <span id="dot" class="dot"></span>
 
     <span id="connText">
       Non connecté
@@ -665,34 +454,19 @@ select{
 </header>
 
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+<!-- ================= LOGIN ================= -->
 
-<div
-  id="login"
-  class="content"
->
+<div id="login" class="content">
 
-  <section
-    class="card login"
-  >
+  <section class="card login">
 
     <h1>
-
       Connexion
-
-      <span class="grad">
-        Deriv
-      </span>
-
+      <span class="grad">Deriv</span>
     </h1>
 
     <p class="muted">
-
-      Connectez votre compte
-      avec votre Personal Access Token.
-
+      Connectez votre compte avec votre Personal Access Token.
     </p>
 
     <input
@@ -706,22 +480,18 @@ select{
     <button
       id="loginBtn"
       class="btn primary"
+      type="button"
     >
-
       Se connecter
-
     </button>
 
-    <div
-      id="loginError"
-      class="error"
-    ></div>
+    <div id="loginError" class="error"></div>
+
+    <div id="loginSuccess" class="success"></div>
 
     <div class="notice">
-
-      Votre PAT reste côté serveur.
+      Votre token est utilisé côté serveur.
       Il n'est pas affiché dans l'interface.
-
     </div>
 
   </section>
@@ -729,9 +499,7 @@ select{
 </div>
 
 
-<!-- =====================================================
-     WORKSPACE
-===================================================== -->
+<!-- ================= WORKSPACE ================= -->
 
 <div
   id="workspace"
@@ -741,59 +509,35 @@ select{
 
 <aside class="side">
 
-  <button
-    class="navbtn active"
-    data-page="dashboard"
-  >
+  <button class="navbtn active" data-page="dashboard">
     ⌂ Dashboard
   </button>
 
-  <button
-    class="navbtn"
-    data-page="markets"
-  >
+  <button class="navbtn" data-page="markets">
     ◈ Marchés
   </button>
 
-  <button
-    class="navbtn"
-    data-page="trading"
-  >
+  <button class="navbtn" data-page="trading">
     ↗ Trading
   </button>
 
-  <button
-    class="navbtn"
-    data-page="positions"
-  >
+  <button class="navbtn" data-page="positions">
     ▣ Positions
   </button>
 
-  <button
-    class="navbtn"
-    data-page="history"
-  >
+  <button class="navbtn" data-page="history">
     ◷ Historique
   </button>
 
-  <button
-    class="navbtn"
-    data-page="bots"
-  >
+  <button class="navbtn" data-page="bots">
     ⚙ Bots
   </button>
 
-  <button
-    class="navbtn"
-    data-page="settings"
-  >
+  <button class="navbtn" data-page="settings">
     ⚙ Paramètres
   </button>
 
-  <button
-    id="logout"
-    class="navbtn"
-  >
+  <button id="logout" class="navbtn">
     ⇥ Déconnexion
   </button>
 
@@ -803,22 +547,15 @@ select{
 <main class="content">
 
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
+<!-- ================= DASHBOARD ================= -->
 
-<section
-  id="dashboard"
-  class="page active"
->
+<section id="dashboard" class="page active">
 
   <div class="between row">
 
     <div>
 
-      <h1>
-        Dashboard
-      </h1>
+      <h1>Dashboard</h1>
 
       <p class="muted">
         Vue générale de votre compte Deriv.
@@ -826,10 +563,7 @@ select{
 
     </div>
 
-    <div
-      id="accountBadge"
-      class="notice"
-    >
+    <div id="accountBadge" class="notice">
       Compte : —
     </div>
 
@@ -840,64 +574,33 @@ select{
 
     <div class="card">
 
-      <div class="label">
-        Solde
-      </div>
+      <div class="label">Solde</div>
 
-      <div
-        id="balance"
-        class="big"
-      >
-        —
-      </div>
+      <div id="balance" class="big">—</div>
 
     </div>
 
-
     <div class="card">
 
-      <div class="label">
-        Devise
-      </div>
+      <div class="label">Devise</div>
 
-      <div
-        id="currency"
-        class="big"
-      >
-        —
-      </div>
+      <div id="currency" class="big">—</div>
 
     </div>
 
-
     <div class="card">
 
-      <div class="label">
-        Positions
-      </div>
+      <div class="label">Positions</div>
 
-      <div
-        id="positionCount"
-        class="big"
-      >
-        0
-      </div>
+      <div id="positionCount" class="big">0</div>
 
     </div>
 
-
     <div class="card">
 
-      <div class="label">
-        P/L ouvert
-      </div>
+      <div class="label">P/L ouvert</div>
 
-      <div
-        id="openProfit"
-        class="big"
-      >
-        —
-      </div>
+      <div id="openProfit" class="big">—</div>
 
     </div>
 
@@ -908,51 +611,26 @@ select{
 
     <div class="card">
 
-      <h2>
-        Marché actif
-      </h2>
+      <h2>Marché actif</h2>
 
-      <div
-        id="dashSymbol"
-        class="big"
-      >
-        —
-      </div>
+      <div id="dashSymbol" class="big">—</div>
 
-      <p
-        id="dashPrice"
-        class="muted"
-      >
-        —
-      </p>
+      <p id="dashPrice" class="muted">—</p>
 
     </div>
 
-
     <div class="card">
 
-      <h2>
-        État
-      </h2>
+      <h2>État</h2>
 
       <p class="muted">
-
         Flux temps réel :
-
-        <b id="wsState">
-          En attente
-        </b>
-
+        <b id="wsState">En attente</b>
       </p>
 
       <p class="muted">
-
         Trading réel :
-
-        <b>
-          confirmation manuelle
-        </b>
-
+        <b>confirmation manuelle</b>
       </p>
 
     </div>
@@ -962,33 +640,22 @@ select{
 </section>
 
 
-<!-- =====================================================
-     MARKETS
-===================================================== -->
+<!-- ================= MARKETS ================= -->
 
-<section
-  id="markets"
-  class="page"
->
+<section id="markets" class="page">
 
-  <h1>
-    Marchés
-  </h1>
+  <h1>Marchés</h1>
 
   <p class="muted">
     Prix en temps réel.
   </p>
-
 
   <div
     class="card marketgrid grid"
     style="margin-top:18px"
   >
 
-    <div
-      class="list"
-      id="assetList"
-    >
+    <div class="list" id="assetList">
 
       <div class="empty">
         Chargement des marchés…
@@ -996,35 +663,25 @@ select{
 
     </div>
 
-
     <div class="chart">
 
       <div class="charthead">
 
         <div>
 
-          <h2 id="chartTitle">
-            —
-          </h2>
+          <h2 id="chartTitle">—</h2>
 
-          <span
-            id="chartPrice"
-            class="muted"
-          >
+          <span id="chartPrice" class="muted">
             —
           </span>
 
         </div>
 
-        <span
-          id="chartTick"
-          class="muted"
-        >
+        <span id="chartTick" class="muted">
           —
         </span>
 
       </div>
-
 
       <div class="chartbox">
 
@@ -1039,20 +696,11 @@ select{
 
     </div>
 
+    <div class="card" style="padding:14px">
 
-    <div
-      class="card"
-      style="padding:14px"
-    >
+      <h2>Actif</h2>
 
-      <h2>
-        Actif
-      </h2>
-
-      <p
-        id="selectedName"
-        class="muted"
-      >
+      <p id="selectedName" class="muted">
         Sélectionnez un marché.
       </p>
 
@@ -1060,6 +708,7 @@ select{
         id="useTrade"
         class="btn primary"
         style="width:100%"
+        type="button"
       >
         Trader cet actif
       </button>
@@ -1071,23 +720,15 @@ select{
 </section>
 
 
-<!-- =====================================================
-     TRADING
-===================================================== -->
+<!-- ================= TRADING ================= -->
 
-<section
-  id="trading"
-  class="page"
->
+<section id="trading" class="page">
 
-  <h1>
-    Trading
-  </h1>
+  <h1>Trading</h1>
 
   <p class="muted">
     Préparez une proposition avant toute opération.
   </p>
-
 
   <div
     class="grid tradegrid"
@@ -1096,28 +737,19 @@ select{
 
     <div class="card">
 
-      <h2>
-        Ordre
-      </h2>
-
+      <h2>Ordre</h2>
 
       <div class="field">
 
-        <label>
-          Actif
-        </label>
+        <label>Actif</label>
 
-        <select id="tradeSymbol">
-        </select>
+        <select id="tradeSymbol"></select>
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Type de contrat
-        </label>
+        <label>Type de contrat</label>
 
         <select id="contractType">
 
@@ -1133,12 +765,9 @@ select{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Mise
-        </label>
+        <label>Mise</label>
 
         <input
           id="amount"
@@ -1151,12 +780,9 @@ select{
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Durée en secondes
-        </label>
+        <label>Durée en secondes</label>
 
         <input
           id="duration"
@@ -1169,52 +795,41 @@ select{
 
       </div>
 
-
       <button
         id="proposalBtn"
         class="btn primary"
+        type="button"
       >
         Obtenir une proposition
       </button>
 
-
-      <div
-        id="proposalBox"
-        class="notice"
-      >
+      <div id="proposalBox" class="notice">
         Aucune proposition.
       </div>
-
 
       <button
         id="buyBtn"
         class="btn green"
         style="width:100%;margin-top:10px;display:none"
+        type="button"
       >
         Confirmer l'achat
       </button>
 
     </div>
 
-
     <div class="card">
 
-      <h2>
-        Protection
-      </h2>
+      <h2>Protection</h2>
 
       <p class="muted">
-
-        ATLAS demande une confirmation
-        explicite avant l'achat.
-
+        ATLAS demande une confirmation explicite
+        avant l'achat.
       </p>
 
       <div class="notice danger">
-
-        Le trading réel comporte un risque
-        de perte.
-
+        Le trading réel comporte un risque de perte.
+        Testez d'abord avec un compte démo.
       </div>
 
     </div>
@@ -1224,55 +839,28 @@ select{
 </section>
 
 
-<!-- =====================================================
-     POSITIONS
-===================================================== -->
+<!-- ================= POSITIONS ================= -->
 
-<section
-  id="positions"
-  class="page"
->
+<section id="positions" class="page">
 
-  <h1>
-    Positions
-  </h1>
+  <h1>Positions</h1>
 
   <p class="muted">
     Contrats ouverts du compte.
   </p>
 
-
-  <div
-    class="card"
-    style="margin-top:18px"
-  >
+  <div class="card" style="margin-top:18px">
 
     <table class="table">
 
       <thead>
 
         <tr>
-
-          <th>
-            Contrat
-          </th>
-
-          <th>
-            Actif
-          </th>
-
-          <th>
-            Mise
-          </th>
-
-          <th>
-            P/L
-          </th>
-
-          <th>
-            Action
-          </th>
-
+          <th>Contrat</th>
+          <th>Actif</th>
+          <th>Mise</th>
+          <th>P/L</th>
+          <th>Action</th>
         </tr>
 
       </thead>
@@ -1280,14 +868,9 @@ select{
       <tbody id="positionsBody">
 
         <tr>
-
-          <td
-            colspan="5"
-            class="empty"
-          >
+          <td colspan="5" class="empty">
             Aucune position.
           </td>
-
         </tr>
 
       </tbody>
@@ -1299,35 +882,20 @@ select{
 </section>
 
 
-<!-- =====================================================
-     HISTORIQUE
-===================================================== -->
+<!-- ================= HISTORY ================= -->
 
-<section
-  id="history"
-  class="page"
->
+<section id="history" class="page">
 
-  <h1>
-    Historique
-  </h1>
+  <h1>Historique</h1>
 
   <p class="muted">
     Historique des opérations.
   </p>
 
+  <div class="card" style="margin-top:18px">
 
-  <div
-    class="card"
-    style="margin-top:18px"
-  >
-
-    <div
-      id="historyBox"
-      class="empty"
-    >
-      L'historique sera synchronisé
-      avec le compte Deriv.
+    <div id="historyBox" class="empty">
+      L'historique sera synchronisé avec le compte Deriv.
     </div>
 
   </div>
@@ -1335,35 +903,24 @@ select{
 </section>
 
 
-<!-- =====================================================
-     BOTS
-===================================================== -->
+<!-- ================= BOTS ================= -->
 
-<section
-  id="bots"
-  class="page"
->
+<section id="bots" class="page">
 
-  <h1>
-    Bots
-  </h1>
+  <h1>Bots</h1>
 
   <p class="muted">
     Espace réservé à une prochaine mise à jour.
   </p>
 
-
   <div class="botempty">
 
     <div>
 
-      <h2>
-        🤖 ATLAS Bots
-      </h2>
+      <h2>🤖 ATLAS Bots</h2>
 
       <p class="muted">
-        Le constructeur de bots sera ajouté
-        séparément.
+        Le constructeur de bots sera ajouté séparément.
       </p>
 
       <p class="muted">
@@ -1377,23 +934,15 @@ select{
 </section>
 
 
-<!-- =====================================================
-     SETTINGS
-===================================================== -->
+<!-- ================= SETTINGS ================= -->
 
-<section
-  id="settings"
-  class="page"
->
+<section id="settings" class="page">
 
-  <h1>
-    Paramètres
-  </h1>
+  <h1>Paramètres</h1>
 
   <p class="muted">
     Configuration de votre espace ATLAS.
   </p>
-
 
   <div
     class="grid tradegrid"
@@ -1402,31 +951,20 @@ select{
 
     <div class="card">
 
-      <h2>
-        Compte actif
-      </h2>
+      <h2>Compte actif</h2>
 
-      <div
-        id="settingsAccount"
-        class="big"
-      >
+      <div id="settingsAccount" class="big">
         —
       </div>
 
     </div>
 
-
     <div class="card">
 
-      <h2>
-        Sécurité
-      </h2>
+      <h2>Sécurité</h2>
 
       <p class="muted">
-
-        Le PAT n'est pas affiché
-        dans le navigateur.
-
+        Le PAT n'est pas affiché dans le navigateur.
       </p>
 
     </div>
@@ -1435,60 +973,46 @@ select{
 
 </section>
 
-
 </main>
-
 </div>
-
 </div>
 
 
 <script>
 
 /* =====================================================
-   VARIABLES
+   ATLAS — JAVASCRIPT
 ===================================================== */
 
-let authSocket = null;
-
-let publicSocket = null;
+"use strict";
 
 let accountId = null;
-
 let selectedSymbol = "1HZ100V";
-
-let proposalId = null;
-
-let ticks = [];
-
 let assets = [];
+let ticks = [];
+let proposalId = null;
 
 
 /* =====================================================
-   UTILITAIRES
+   UTILITAIRE
 ===================================================== */
 
-const $ =
-  id => document.getElementById(id);
+function $(id){
+  return document.getElementById(id);
+}
 
+function fmt(number, decimals = 2){
 
-function fmt(
-  number,
-  decimals = 2
-){
+  const n = Number(number);
 
-  return Number(number)
-    .toLocaleString(
-      "fr-FR",
-      {
-        minimumFractionDigits:
-          decimals,
+  if(!Number.isFinite(n)){
+    return "—";
+  }
 
-        maximumFractionDigits:
-          decimals
-      }
-    );
-
+  return n.toLocaleString("fr-FR",{
+    minimumFractionDigits:decimals,
+    maximumFractionDigits:decimals
+  });
 }
 
 
@@ -1498,9 +1022,7 @@ function fmt(
 
 function setConnected(on){
 
-  $("dot")
-    .classList
-    .toggle("on",on);
+  $("dot").classList.toggle("on",on);
 
   $("connText").textContent =
     on
@@ -1514,109 +1036,330 @@ function setConnected(on){
    NAVIGATION
 ===================================================== */
 
-function page(name){
+function showPage(name){
 
   document
     .querySelectorAll(".page")
-    .forEach(
-      x =>
-        x.classList.remove(
-          "active"
-        )
-    );
+    .forEach(el => {
+      el.classList.remove("active");
+    });
 
   document
-    .querySelectorAll(
-      ".navbtn[data-page]"
-    )
-    .forEach(
-      x =>
-        x.classList.remove(
-          "active"
-        )
-    );
+    .querySelectorAll(".navbtn[data-page]")
+    .forEach(el => {
+      el.classList.remove("active");
+    });
 
-  $(name)
-    ?.classList
-    .add("active");
+  const target = $(name);
 
-  document
-    .querySelector(
+  if(target){
+    target.classList.add("active");
+  }
+
+  const button =
+    document.querySelector(
       `.navbtn[data-page="${name}"]`
-    )
-    ?.classList
-    .add("active");
+    );
+
+  if(button){
+    button.classList.add("active");
+  }
 
 }
 
 
 document
-  .querySelectorAll(
-    ".navbtn[data-page]"
-  )
+  .querySelectorAll(".navbtn[data-page]")
   .forEach(button => {
 
-    button.onclick =
-      () =>
-        page(
-          button.dataset.page
-        );
+    button.addEventListener("click",function(){
+
+      showPage(this.dataset.page);
+
+    });
 
   });
 
 
 /* =====================================================
-   EXTRACTION COMPTE
+   AFFICHER LE WORKSPACE
 ===================================================== */
 
-function extractAccountId(data){
+function openWorkspace(){
 
-  if(Array.isArray(data)){
+  $("login").style.display = "none";
 
-    const account =
-      data.find(
-        a =>
-          a?.account_id ||
-          a?.loginid ||
-          a?.login_id
-      );
+  $("workspace").style.display = "grid";
 
-    const first =
-      account || data[0];
+  setConnected(true);
 
-    return (
-      first?.account_id ||
-      first?.loginid ||
-      first?.login_id ||
-      null
-    );
+  showPage("dashboard");
+
+}
+
+
+/* =====================================================
+   CONNEXION PAT
+===================================================== */
+
+async function login(){
+
+  const token =
+    $("token").value.trim();
+
+  $("loginError").textContent = "";
+  $("loginSuccess").textContent = "";
+
+  if(!token){
+
+    $("loginError").textContent =
+      "Veuillez entrer votre Personal Access Token.";
+
+    return;
 
   }
 
 
-  if(
-    data &&
-    typeof data === "object"
-  ){
+  $("loginBtn").disabled = true;
 
-    if(
-      data.account_id ||
-      data.loginid ||
-      data.login_id
-    ){
+  $("loginBtn").textContent =
+    "Connexion…";
 
-      return (
-        data.account_id ||
-        data.loginid ||
-        data.login_id
+
+  try{
+
+    const response =
+      await fetch(
+        "/auth/token",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+          },
+
+          body:JSON.stringify({
+            token:token
+          })
+        }
+      );
+
+
+    /*
+      On lit d'abord la réponse comme texte.
+      Cela évite l'erreur :
+      Unexpected token '<'
+    */
+
+    const raw =
+      await response.text();
+
+    let data = null;
+
+    try{
+
+      data =
+        raw
+          ? JSON.parse(raw)
+          : null;
+
+    }catch(parseError){
+
+      console.error(
+        "Réponse serveur non JSON:",
+        raw
+      );
+
+      throw new Error(
+        "Le serveur ATLAS a renvoyé une réponse invalide."
       );
 
     }
 
-    for(
-      const value
-      of Object.values(data)
-    ){
 
-      if(
- 
+    if(!response.ok){
+
+      throw new Error(
+        data?.message ||
+        "Connexion refusée par le serveur."
+      );
+
+    }
+
+
+    if(!data || !data.success){
+
+      throw new Error(
+        data?.message ||
+        "Impossible de connecter le compte."
+      );
+
+    }
+
+
+    /*
+      Connexion réussie
+    */
+
+    $("token").value = "";
+
+    $("loginSuccess").textContent =
+      "✓ Connexion réussie.";
+
+    accountId =
+      data.accounts?.[0]?.loginid ||
+      data.accounts?.[0]?.account_id ||
+      null;
+
+
+    if(accountId){
+
+      $("accountBadge").textContent =
+        "Compte : " + accountId;
+
+      $("settingsAccount").textContent =
+        accountId;
+
+    }
+
+
+    /*
+      Afficher immédiatement le dashboard
+    */
+
+    openWorkspace();
+
+
+    /*
+      Charger les données disponibles
+    */
+
+    loadAccounts(data.accounts);
+
+    loadMarkets();
+
+
+  }catch(error){
+
+    console.error(
+      "ATLAS login error:",
+      error
+    );
+
+    $("loginError").textContent =
+      error.message ||
+      "Erreur pendant la connexion.";
+
+    setConnected(false);
+
+  }finally{
+
+    $("loginBtn").disabled = false;
+
+    $("loginBtn").textContent =
+      "Se connecter";
+
+  }
+
+}
+
+
+/* =====================================================
+   BOUTON CONNEXION
+===================================================== */
+
+$("loginBtn").addEventListener(
+  "click",
+  login
+);
+
+
+/* =====================================================
+   TOUCHE ENTRÉE
+===================================================== */
+
+$("token").addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Enter"){
+      event.preventDefault();
+      login();
+    }
+
+  }
+);
+
+
+/* =====================================================
+   COMPTES
+===================================================== */
+
+function loadAccounts(accounts){
+
+  if(!accounts){
+    return;
+  }
+
+  let list = accounts;
+
+  if(!Array.isArray(list)){
+    list = [list];
+  }
+
+  if(!list.length){
+    return;
+  }
+
+  const account =
+    list[0];
+
+  const id =
+    account.loginid ||
+    account.account_id ||
+    account.id;
+
+  const balance =
+    account.balance;
+
+  const currency =
+    account.currency;
+
+  if(id){
+
+    accountId = id;
+
+    $("accountBadge").textContent =
+      "Compte : " + id;
+
+    $("settingsAccount").textContent =
+      id;
+
+  }
+
+  if(balance !== undefined){
+
+    $("balance").textContent =
+      fmt(balance);
+
+  }
+
+  if(currency){
+
+    $("currency").textContent =
+      currency;
+
+  }
+
+}
+
+
+/* =====================================================
+   MARCHÉS
+===================================================== */
+
+async function loadMarkets(){
+
+  /*
+    Liste de
