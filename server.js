@@ -6,16 +6,18 @@ require("dotenv").config();
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
 const DERIV_APP_ID = process.env.DERIV_APP_ID;
 
 const SESSION_SECRET =
   process.env.SESSION_SECRET ||
   "atlas-development-secret-change-me";
 
+const DERIV_API =
+  "https://api.derivws.com";
+
 app.set("trust proxy", 1);
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -23,7 +25,6 @@ app.use(
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
@@ -33,9 +34,9 @@ app.use(
   })
 );
 
-/* =========================================================
+/* =====================================================
    FRONTEND
-========================================================= */
+===================================================== */
 
 const frontendPath = path.join(__dirname, "frontend");
 
@@ -45,37 +46,9 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
-/* =========================================================
-   UTILITAIRE DERIV
-========================================================= */
-
-function derivHeaders(token) {
-  return {
-    Authorization: `Bearer ${token}`,
-    "Deriv-App-ID": DERIV_APP_ID,
-    "Content-Type": "application/json"
-  };
-}
-
-async function parseDerivResponse(response) {
-  const raw = await response.text();
-
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return {
-      errors: [
-        {
-          message: `Réponse inattendue de Deriv (${response.status}).`
-        }
-      ]
-    };
-  }
-}
-
-/* =========================================================
-   CONNEXION PAR PAT
-========================================================= */
+/* =====================================================
+   AUTHENTIFICATION PAT
+===================================================== */
 
 app.post("/auth/token", async (req, res) => {
   try {
@@ -96,48 +69,83 @@ app.post("/auth/token", async (req, res) => {
     }
 
     /*
-      ATLAS vérifie le PAT auprès de Deriv.
+      Le PAT reste uniquement côté serveur.
+      Il n'est jamais renvoyé au navigateur.
     */
 
     const response = await fetch(
-      "https://api.derivws.com/trading/v1/options/accounts",
+      `${DERIV_API}/trading/v1/options/accounts`,
       {
         method: "GET",
-        headers: derivHeaders(token)
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Deriv-App-ID": DERIV_APP_ID,
+          Accept: "application/json"
+        }
       }
     );
 
-    const data = await parseDerivResponse(response);
+    const raw = await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      data = {
+        errors: [
+          {
+            message:
+              "Réponse inattendue reçue de Deriv."
+          }
+        ]
+      };
+    }
 
     if (!response.ok) {
-      console.error("Erreur Deriv :", data);
+      console.error(
+        "Erreur comptes Deriv:",
+        response.status,
+        data
+      );
 
       return res.status(response.status).json({
         success: false,
         message:
           data?.errors?.[0]?.message ||
-          "Token invalide ou permissions insuffisantes."
+          "PAT invalide ou permissions insuffisantes."
       });
     }
 
     /*
-      Le PAT reste uniquement côté serveur.
+      On conserve le PAT dans la session serveur.
     */
 
     req.session.derivAccessToken = token;
 
-    req.session.derivAccounts =
-      data?.data || data;
+    /*
+      La réponse des comptes est conservée
+      pour permettre au frontend de choisir
+      le compte à utiliser.
+    */
+
+    const accounts =
+      data?.data ||
+      data?.accounts ||
+      [];
+
+    req.session.derivAccounts = accounts;
 
     return res.json({
       success: true,
-      accounts:
-        data?.data || data
+      accounts
     });
 
   } catch (error) {
-
-    console.error("Erreur connexion PAT :", error);
+    console.error(
+      "Erreur /auth/token:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -147,9 +155,9 @@ app.post("/auth/token", async (req, res) => {
   }
 });
 
-/* =========================================================
+/* =====================================================
    STATUT AUTHENTIFICATION
-========================================================= */
+===================================================== */
 
 app.get("/api/auth/status", (req, res) => {
 
@@ -160,43 +168,30 @@ app.get("/api/auth/status", (req, res) => {
     accounts:
       req.session.derivAccounts || []
   });
+
 });
 
-/* =========================================================
-   COMPTES DERIV
-========================================================= */
-
-app.get("/api/deriv/accounts", (req, res) => {
-
-  if (!req.session.derivAccessToken) {
-
-    return res.status(401).json({
-      success: false,
-      message: "ATLAS n'est pas connecté à Deriv."
-    });
-  }
-
-  res.json({
-    success: true,
-
-    accounts:
-      req.session.derivAccounts || []
-  });
-});
-
-/* =========================================================
-   WEBSOCKET AUTHENTIFIÉ
-========================================================= */
+/* =====================================================
+   OBTENIR L'URL WEBSOCKET AUTHENTIFIÉE
+===================================================== */
 
 app.post("/api/deriv/otp", async (req, res) => {
 
   try {
 
     if (!req.session.derivAccessToken) {
-
       return res.status(401).json({
         success: false,
-        message: "ATLAS n'est pas connecté."
+        message:
+          "ATLAS n'est pas connecté à Deriv."
+      });
+    }
+
+    if (!DERIV_APP_ID) {
+      return res.status(500).json({
+        success: false,
+        message:
+          "DERIV_APP_ID n'est pas configuré."
       });
     }
 
@@ -204,56 +199,78 @@ app.post("/api/deriv/otp", async (req, res) => {
       String(req.body.accountId || "").trim();
 
     if (!accountId) {
-
       return res.status(400).json({
         success: false,
-        message: "Identifiant du compte manquant."
+        message:
+          "Identifiant du compte manquant."
       });
     }
 
     /*
-      Deriv fournit une URL WebSocket temporaire
-      authentifiée avec un OTP.
+      Deriv demande un OTP REST pour ouvrir
+      ensuite le WebSocket authentifié.
     */
 
     const response = await fetch(
-      `https://api.derivws.com/trading/v1/options/accounts/${encodeURIComponent(
-        accountId
-      )}/otp`,
+      `${DERIV_API}/trading/v1/options/accounts/${encodeURIComponent(accountId)}/otp`,
       {
         method: "POST",
+        headers: {
+          Authorization:
+            `Bearer ${req.session.derivAccessToken}`,
 
-        headers: derivHeaders(
-          req.session.derivAccessToken
-        )
+          "Deriv-App-ID":
+            DERIV_APP_ID,
+
+          Accept:
+            "application/json"
+        }
       }
     );
 
-    const data =
-      await parseDerivResponse(response);
+    const raw = await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      data = {
+        errors: [
+          {
+            message:
+              "Réponse OTP invalide de Deriv."
+          }
+        ]
+      };
+    }
 
     if (!response.ok) {
 
       console.error(
-        "Erreur OTP Deriv :",
+        "Erreur OTP Deriv:",
+        response.status,
         data
       );
 
       return res.status(response.status).json({
         success: false,
-
         message:
           data?.errors?.[0]?.message ||
-          "Impossible de créer la connexion WebSocket."
+          "Impossible d'obtenir la connexion WebSocket."
       });
     }
 
-    const websocketUrl =
+    const url =
       data?.data?.url ||
-      data?.url ||
-      null;
+      data?.url;
 
-    if (!websocketUrl) {
+    if (!url) {
+
+      console.error(
+        "OTP sans URL:",
+        data
+      );
 
       return res.status(500).json({
         success: false,
@@ -264,27 +281,50 @@ app.post("/api/deriv/otp", async (req, res) => {
 
     return res.json({
       success: true,
-      url: websocketUrl
+      url
     });
 
   } catch (error) {
 
     console.error(
-      "Erreur WebSocket :",
+      "Erreur /api/deriv/otp:",
       error
     );
 
     return res.status(500).json({
       success: false,
       message:
-        "Impossible de préparer la connexion WebSocket."
+        "Impossible d'établir la connexion WebSocket Deriv."
     });
   }
+
 });
 
-/* =========================================================
-   DECONNEXION
-========================================================= */
+/* =====================================================
+   COMPTES
+===================================================== */
+
+app.get("/api/deriv/accounts", (req, res) => {
+
+  if (!req.session.derivAccessToken) {
+    return res.status(401).json({
+      success: false,
+      message:
+        "ATLAS n'est pas connecté à Deriv."
+    });
+  }
+
+  res.json({
+    success: true,
+    accounts:
+      req.session.derivAccounts || []
+  });
+
+});
+
+/* =====================================================
+   DÉCONNEXION
+===================================================== */
 
 app.post("/auth/logout", (req, res) => {
 
@@ -295,32 +335,30 @@ app.post("/auth/logout", (req, res) => {
     });
 
   });
+
 });
 
-/* =========================================================
+/* =====================================================
    HEALTH CHECK
-========================================================= */
+===================================================== */
 
 app.get("/api/health", (req, res) => {
 
   res.json({
-
     status: "ok",
-
     platform: "ATLAS",
-
     authentication: "PAT",
-
     derivAppConfigured:
-      Boolean(DERIV_APP_ID)
-
+      Boolean(DERIV_APP_ID),
+    websocket:
+      "OTP authenticated"
   });
 
 });
 
-/* =========================================================
+/* =====================================================
    SERVEUR
-========================================================= */
+===================================================== */
 
 app.listen(
   PORT,
