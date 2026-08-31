@@ -1,12 +1,26 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070b14">
-<title>ATLAS — Trading Workspace</title>
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<meta
+  name="theme-color"
+  content="#070b14"
+>
+
+<title>
+  ATLAS — Trading Workspace
+</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -18,7 +32,9 @@ body{
   font-family:Arial,Helvetica,sans-serif;
 }
 
-button,input,select{
+button,
+input,
+select{
   font:inherit;
 }
 
@@ -40,28 +56,48 @@ button{
 
 .app{
   min-height:100vh;
+
   background-image:
-    linear-gradient(#ffffff05 1px,transparent 1px),
-    linear-gradient(90deg,#ffffff05 1px,transparent 1px);
-  background-size:44px 44px;
+    linear-gradient(
+      #ffffff05 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      #ffffff05 1px,
+      transparent 1px
+    );
+
+  background-size:
+    44px 44px;
 }
 
 /* =====================================================
-   TOP BAR
+   TOP
 ===================================================== */
 
 .top{
   height:68px;
-  border-bottom:1px solid var(--border);
+
+  border-bottom:
+    1px solid var(--border);
+
   background:#070b14ee;
+
   display:flex;
   align-items:center;
+
   padding:0 18px;
+
   gap:22px;
+
   position:sticky;
   top:0;
+
   z-index:20;
-  backdrop-filter:blur(16px);
+
+  backdrop-filter:
+    blur(16px);
 }
 
 .logo{
@@ -70,34 +106,46 @@ button{
 }
 
 .grad{
-  background:linear-gradient(
-    90deg,
-    var(--accent),
-    var(--cyan)
-  );
+  background:
+    linear-gradient(
+      90deg,
+      var(--accent),
+      var(--cyan)
+    );
+
   color:transparent;
+
   background-clip:text;
 }
 
 .conn{
   margin-left:auto;
+
   font-size:12px;
+
   color:var(--muted);
+
   display:flex;
+
   align-items:center;
+
   gap:7px;
 }
 
 .dot{
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#64748b;
 }
 
 .dot.on{
   background:var(--green);
-  box-shadow:0 0 10px var(--green);
+
+  box-shadow:
+    0 0 10px var(--green);
 }
 
 /* =====================================================
@@ -106,39 +154,60 @@ button{
 
 .layout{
   display:grid;
-  grid-template-columns:220px 1fr;
-  min-height:calc(100vh - 68px);
+
+  grid-template-columns:
+    220px 1fr;
+
+  min-height:
+    calc(100vh - 68px);
 }
 
 .side{
-  border-right:1px solid var(--border);
+  border-right:
+    1px solid var(--border);
+
   padding:18px 12px;
+
   background:#080d17;
 }
 
 .navbtn{
   display:block;
+
   width:100%;
+
   text-align:left;
+
   padding:12px;
-  border:1px solid transparent;
+
+  border:
+    1px solid transparent;
+
   background:transparent;
+
   color:#9aa7ba;
+
   border-radius:10px;
+
   margin-bottom:6px;
 }
 
 .navbtn.active,
 .navbtn:hover{
   background:#111a29;
+
   color:white;
+
   border-color:#263249;
 }
 
 .content{
   padding:22px;
+
   max-width:1500px;
+
   width:100%;
+
   margin:auto;
 }
 
@@ -186,21 +255,30 @@ h2{
 
 .card{
   background:#0b1220dd;
-  border:1px solid var(--border);
+
+  border:
+    1px solid var(--border);
+
   border-radius:16px;
+
   padding:18px;
 }
 
 .label{
   font-size:11px;
+
   color:#75839a;
+
   text-transform:uppercase;
+
   letter-spacing:.08em;
 }
 
 .big{
   font-size:25px;
+
   font-weight:800;
+
   margin-top:8px;
 }
 
@@ -211,19 +289,26 @@ h2{
 .stats{
   grid-template-columns:
     repeat(4,1fr);
+
   margin:18px 0;
 }
 
 .tradegrid{
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:
+    1fr 1fr;
 }
 
 .notice{
   padding:11px;
+
   border-radius:9px;
+
   background:#101827;
+
   color:#aab7ca;
+
   font-size:12px;
+
   margin-top:10px;
 }
 
@@ -237,20 +322,23 @@ h2{
 
 .marketgrid{
   grid-template-columns:
-    280px
-    1fr
-    300px;
+    280px 1fr 300px;
 }
 
 .list{
   max-height:590px;
+
   overflow:auto;
 }
 
 .asset{
   padding:12px;
-  border-bottom:1px solid #142033;
+
+  border-bottom:
+    1px solid #142033;
+
   cursor:pointer;
+
   border-radius:9px;
 }
 
@@ -265,31 +353,45 @@ h2{
 
 .asset span{
   font-size:11px;
+
   color:var(--muted);
 }
 
 .chart{
   height:420px;
+
   display:flex;
+
   flex-direction:column;
 }
 
 .charthead{
   display:flex;
+
   justify-content:space-between;
+
   gap:10px;
+
   align-items:center;
 }
 
 .chartbox{
   flex:1;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   background:#080e18;
+
   border-radius:12px;
+
   margin-top:12px;
+
   position:relative;
+
   overflow:hidden;
 }
 
@@ -299,7 +401,7 @@ h2{
 }
 
 /* =====================================================
-   INPUTS / BUTTONS
+   INPUTS
 ===================================================== */
 
 .field{
@@ -308,47 +410,65 @@ h2{
 
 .field label{
   display:block;
+
   font-size:11px;
+
   color:#7f8da2;
+
   margin-bottom:6px;
 }
 
 .input,
 select{
   width:100%;
+
   padding:11px;
-  border:1px solid #263249;
+
+  border:
+    1px solid #263249;
+
   background:#080e18;
+
   color:white;
+
   border-radius:9px;
 }
 
 .btn{
   border:0;
+
   border-radius:9px;
+
   padding:11px 14px;
 }
 
 .primary{
   background:white;
+
   color:#07101a;
+
   font-weight:800;
 }
 
 .green{
   background:#14532d;
+
   color:#bbf7d0;
 }
 
 .red{
   background:#451a1a;
+
   color:#fecaca;
 }
 
 .ghost{
   background:#111a29;
+
   color:white;
-  border:1px solid #263249;
+
+  border:
+    1px solid #263249;
 }
 
 /* =====================================================
@@ -357,20 +477,27 @@ select{
 
 .table{
   width:100%;
+
   border-collapse:collapse;
+
   font-size:12px;
 }
 
 .table th,
 .table td{
   text-align:left;
+
   padding:11px;
-  border-bottom:1px solid #172236;
+
+  border-bottom:
+    1px solid #172236;
 }
 
 .empty{
   padding:45px 15px;
+
   text-align:center;
+
   color:#65748b;
 }
 
@@ -380,6 +507,7 @@ select{
 
 .login{
   max-width:520px;
+
   margin:80px auto;
 }
 
@@ -393,7 +521,9 @@ select{
 
 .error{
   color:#fca5a5;
+
   font-size:12px;
+
   margin-top:10px;
 }
 
@@ -403,12 +533,20 @@ select{
 
 .botempty{
   min-height:430px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   text-align:center;
-  border:1px dashed #263249;
+
+  border:
+    1px dashed #263249;
+
   border-radius:16px;
+
   background:#080e18;
 }
 
@@ -428,16 +566,24 @@ select{
 
   .side{
     display:flex;
+
     overflow:auto;
+
     border-right:0;
-    border-bottom:1px solid var(--border);
+
+    border-bottom:
+      1px solid var(--border);
+
     position:sticky;
+
     top:68px;
+
     z-index:10;
   }
 
   .navbtn{
     min-width:max-content;
+
     margin:0 4px;
   }
 
@@ -457,6 +603,7 @@ select{
   .tradegrid{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:600px){
@@ -477,8 +624,11 @@ select{
   .big{
     font-size:20px;
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -492,12 +642,19 @@ select{
 <header class="top">
 
   <div class="logo">
-    <span class="grad">AT</span>LAS
+
+    <span class="grad">
+      AT
+    </span>LAS
+
   </div>
 
   <div class="conn">
 
-    <span id="dot" class="dot"></span>
+    <span
+      id="dot"
+      class="dot"
+    ></span>
 
     <span id="connText">
       Non connecté
@@ -512,19 +669,30 @@ select{
      LOGIN
 ===================================================== -->
 
-<div id="login" class="content">
+<div
+  id="login"
+  class="content"
+>
 
-  <section class="card login">
+  <section
+    class="card login"
+  >
 
     <h1>
+
       Connexion
+
       <span class="grad">
         Deriv
       </span>
+
     </h1>
 
     <p class="muted">
-      Connectez votre compte avec votre Personal Access Token.
+
+      Connectez votre compte
+      avec votre Personal Access Token.
+
     </p>
 
     <input
@@ -539,7 +707,9 @@ select{
       id="loginBtn"
       class="btn primary"
     >
+
       Se connecter
+
     </button>
 
     <div
@@ -549,7 +719,7 @@ select{
 
     <div class="notice">
 
-      Votre token est utilisé côté serveur.
+      Votre PAT reste côté serveur.
       Il n'est pas affiché dans l'interface.
 
     </div>
@@ -568,11 +738,6 @@ select{
   class="layout"
   style="display:none"
 >
-
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
 
 <aside class="side">
 
@@ -634,10 +799,6 @@ select{
 
 </aside>
 
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
 
 <main class="content">
 
@@ -777,6 +938,7 @@ select{
       <p class="muted">
 
         Flux temps réel :
+
         <b id="wsState">
           En attente
         </b>
@@ -786,6 +948,7 @@ select{
       <p class="muted">
 
         Trading réel :
+
         <b>
           confirmation manuelle
         </b>
@@ -821,7 +984,6 @@ select{
     class="card marketgrid grid"
     style="margin-top:18px"
   >
-
 
     <div
       class="list"
@@ -1051,8 +1213,7 @@ select{
       <div class="notice danger">
 
         Le trading réel comporte un risque
-        de perte. Testez d'abord avec
-        un compte démo.
+        de perte.
 
       </div>
 
@@ -1115,7 +1276,6 @@ select{
         </tr>
 
       </thead>
-
 
       <tbody id="positionsBody">
 
@@ -1308,19 +1468,26 @@ let assets = [];
    UTILITAIRES
 ===================================================== */
 
-const $ = id =>
-  document.getElementById(id);
+const $ =
+  id => document.getElementById(id);
 
 
-function fmt(number, decimals = 2){
+function fmt(
+  number,
+  decimals = 2
+){
 
-  return Number(number).toLocaleString(
-    "fr-FR",
-    {
-      minimumFractionDigits:decimals,
-      maximumFractionDigits:decimals
-    }
-  );
+  return Number(number)
+    .toLocaleString(
+      "fr-FR",
+      {
+        minimumFractionDigits:
+          decimals,
+
+        maximumFractionDigits:
+          decimals
+      }
+    );
 
 }
 
@@ -1351,18 +1518,26 @@ function page(name){
 
   document
     .querySelectorAll(".page")
-    .forEach(x =>
-      x.classList.remove("active")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "active"
+        )
     );
 
   document
-    .querySelectorAll(".navbtn[data-page]")
-    .forEach(x =>
-      x.classList.remove("active")
+    .querySelectorAll(
+      ".navbtn[data-page]"
+    )
+    .forEach(
+      x =>
+        x.classList.remove(
+          "active"
+        )
     );
 
   $(name)
-    .classList
+    ?.classList
     .add("active");
 
   document
@@ -1376,78 +1551,72 @@ function page(name){
 
 
 document
-  .querySelectorAll(".navbtn[data-page]")
+  .querySelectorAll(
+    ".navbtn[data-page]"
+  )
   .forEach(button => {
 
-    button.onclick = () =>
-      page(button.dataset.page);
+    button.onclick =
+      () =>
+        page(
+          button.dataset.page
+        );
 
   });
 
 
 /* =====================================================
-   LOGIN PAT
+   EXTRACTION COMPTE
 ===================================================== */
 
-async function login(){
+function extractAccountId(data){
 
-  const token =
-    $("token").value.trim();
+  if(Array.isArray(data)){
 
-  $("loginError").textContent = "";
-
-  if(!token){
-
-    $("loginError").textContent =
-      "Veuillez entrer votre PAT.";
-
-    return;
-  }
-
-  $("loginBtn").disabled = true;
-
-  $("loginBtn").textContent =
-    "Connexion…";
-
-
-  try{
-
-    const response =
-      await fetch(
-        "/auth/token",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            token
-          })
-        }
+    const account =
+      data.find(
+        a =>
+          a?.account_id ||
+          a?.loginid ||
+          a?.login_id
       );
 
+    const first =
+      account || data[0];
 
-    const data =
-      await response.json();
+    return (
+      first?.account_id ||
+      first?.loginid ||
+      first?.login_id ||
+      null
+    );
 
+  }
+
+
+  if(
+    data &&
+    typeof data === "object"
+  ){
 
     if(
-      !response.ok ||
-      !data.success
+      data.account_id ||
+      data.loginid ||
+      data.login_id
     ){
 
-      throw new Error(
-        data.message ||
-        "Connexion impossible."
+      return (
+        data.account_id ||
+        data.loginid ||
+        data.login_id
       );
 
     }
 
+    for(
+      const value
+      of Object.values(data)
+    ){
 
-    $("token").value = "";
-
-
-    const id =
+      if(
+ 
