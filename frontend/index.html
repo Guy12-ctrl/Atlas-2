@@ -1,15 +1,12 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#070b14">
-
-<title>ATLAS — Dashboard</title>
+<title>ATLAS — Trading Workspace</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -21,7 +18,7 @@ body{
   font-family:Arial,Helvetica,sans-serif;
 }
 
-button,input{
+button,input,select{
   font:inherit;
 }
 
@@ -29,306 +26,658 @@ button{
   cursor:pointer;
 }
 
-.wrap{
+:root{
+  --bg:#070b14;
+  --panel:#0b1220;
+  --panel2:#080e18;
+  --border:#19263a;
+  --muted:#8290a5;
+  --accent:#a78bfa;
+  --cyan:#22d3ee;
+  --green:#22c55e;
+  --red:#ef4444;
+}
+
+.app{
   min-height:100vh;
   background-image:
-    linear-gradient(#ffffff06 1px,transparent 1px),
-    linear-gradient(90deg,#ffffff06 1px,transparent 1px);
+    linear-gradient(#ffffff05 1px,transparent 1px),
+    linear-gradient(90deg,#ffffff05 1px,transparent 1px);
   background-size:44px 44px;
 }
 
-.nav{
-  height:72px;
-  border-bottom:1px solid #172236;
-  background:#070b14e8;
-  backdrop-filter:blur(18px);
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.top{
+  height:68px;
+  border-bottom:1px solid var(--border);
+  background:#070b14ee;
   display:flex;
   align-items:center;
-  padding:0 28px;
+  padding:0 18px;
+  gap:22px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(16px);
 }
 
 .logo{
-  font-size:23px;
+  font-size:22px;
   font-weight:900;
 }
 
 .grad{
-  background:linear-gradient(90deg,#a78bfa,#22d3ee);
+  background:linear-gradient(
+    90deg,
+    var(--accent),
+    var(--cyan)
+  );
   color:transparent;
   background-clip:text;
 }
 
-.status{
+.conn{
   margin-left:auto;
-  color:#7d8ba0;
   font-size:12px;
+  color:var(--muted);
   display:flex;
   align-items:center;
   gap:7px;
 }
 
-.indicator{
+.dot{
   width:8px;
   height:8px;
   border-radius:50%;
   background:#64748b;
 }
 
-.indicator.on{
-  background:#22c55e;
-  box-shadow:0 0 12px #22c55e;
+.dot.on{
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
 }
 
-.main{
-  width:min(1100px,calc(100% - 32px));
-  margin:auto;
-  padding:55px 0;
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  min-height:calc(100vh - 68px);
 }
 
-.hero{
-  margin-bottom:30px;
+.side{
+  border-right:1px solid var(--border);
+  padding:18px 12px;
+  background:#080d17;
 }
 
-.hero h1{
-  font-size:clamp(34px,6vw,58px);
-  margin:0;
-  letter-spacing:-3px;
-}
-
-.hero p{
-  color:#8391a6;
-  line-height:1.7;
-}
-
-.login-card,
-.dashboard{
-  background:#0b1220cc;
-  border:1px solid #19263a;
-  border-radius:18px;
-  padding:28px;
-}
-
-.login-card{
-  max-width:500px;
-  margin:40px auto;
-}
-
-input{
+.navbtn{
+  display:block;
   width:100%;
-  padding:14px;
-  margin-top:15px;
+  text-align:left;
+  padding:12px;
+  border:1px solid transparent;
+  background:transparent;
+  color:#9aa7ba;
   border-radius:10px;
+  margin-bottom:6px;
+}
+
+.navbtn.active,
+.navbtn:hover{
+  background:#111a29;
+  color:white;
+  border-color:#263249;
+}
+
+.content{
+  padding:22px;
+  max-width:1500px;
+  width:100%;
+  margin:auto;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+h1{
+  margin:0;
+  font-size:28px;
+}
+
+h2{
+  margin:0 0 10px;
+  font-size:18px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.between{
+  justify-content:space-between;
+}
+
+.card{
+  background:#0b1220dd;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+}
+
+.label{
+  font-size:11px;
+  color:#75839a;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.big{
+  font-size:25px;
+  font-weight:800;
+  margin-top:8px;
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.stats{
+  grid-template-columns:
+    repeat(4,1fr);
+  margin:18px 0;
+}
+
+.tradegrid{
+  grid-template-columns:1fr 1fr;
+}
+
+.notice{
+  padding:11px;
+  border-radius:9px;
+  background:#101827;
+  color:#aab7ca;
+  font-size:12px;
+  margin-top:10px;
+}
+
+.danger{
+  color:#fca5a5;
+}
+
+/* =====================================================
+   MARKETS
+===================================================== */
+
+.marketgrid{
+  grid-template-columns:
+    280px
+    1fr
+    300px;
+}
+
+.list{
+  max-height:590px;
+  overflow:auto;
+}
+
+.asset{
+  padding:12px;
+  border-bottom:1px solid #142033;
+  cursor:pointer;
+  border-radius:9px;
+}
+
+.asset:hover,
+.asset.sel{
+  background:#111a29;
+}
+
+.asset strong{
+  display:block;
+}
+
+.asset span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.chart{
+  height:420px;
+  display:flex;
+  flex-direction:column;
+}
+
+.charthead{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.chartbox{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#080e18;
+  border-radius:12px;
+  margin-top:12px;
+  position:relative;
+  overflow:hidden;
+}
+
+.chartline{
+  width:100%;
+  height:100%;
+}
+
+/* =====================================================
+   INPUTS / BUTTONS
+===================================================== */
+
+.field{
+  margin:10px 0;
+}
+
+.field label{
+  display:block;
+  font-size:11px;
+  color:#7f8da2;
+  margin-bottom:6px;
+}
+
+.input,
+select{
+  width:100%;
+  padding:11px;
   border:1px solid #263249;
   background:#080e18;
   color:white;
-  outline:none;
+  border-radius:9px;
 }
 
-button{
+.btn{
   border:0;
-  border-radius:10px;
-  padding:13px 16px;
+  border-radius:9px;
+  padding:11px 14px;
 }
 
 .primary{
-  width:100%;
-  margin-top:12px;
   background:white;
   color:#07101a;
-  font-weight:900;
+  font-weight:800;
 }
 
-.secondary{
+.green{
+  background:#14532d;
+  color:#bbf7d0;
+}
+
+.red{
+  background:#451a1a;
+  color:#fecaca;
+}
+
+.ghost{
   background:#111a29;
   color:white;
   border:1px solid #263249;
 }
 
-.error{
-  margin-top:12px;
-  color:#fca5a5;
-  font-size:13px;
-}
+/* =====================================================
+   TABLE
+===================================================== */
 
-.dashboard{
-  display:none;
-}
-
-.dashboard.show{
-  display:block;
-}
-
-.login-card.hide{
-  display:none;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.topbar h2{
-  margin:0;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.stat{
-  background:#080e18;
-  border:1px solid #19263a;
-  border-radius:14px;
-  padding:20px;
-}
-
-.label{
-  color:#7d8ba0;
+.table{
+  width:100%;
+  border-collapse:collapse;
   font-size:12px;
 }
 
-.value{
-  margin-top:8px;
-  font-size:25px;
-  font-weight:800;
+.table th,
+.table td{
+  text-align:left;
+  padding:11px;
+  border-bottom:1px solid #172236;
 }
 
-.account{
-  margin-top:18px;
-  padding:15px;
+.empty{
+  padding:45px 15px;
+  text-align:center;
+  color:#65748b;
+}
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login{
+  max-width:520px;
+  margin:80px auto;
+}
+
+.login input{
+  margin:15px 0;
+}
+
+.login button{
+  width:100%;
+}
+
+.error{
+  color:#fca5a5;
+  font-size:12px;
+  margin-top:10px;
+}
+
+/* =====================================================
+   BOTS
+===================================================== */
+
+.botempty{
+  min-height:430px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px dashed #263249;
+  border-radius:16px;
   background:#080e18;
-  border-radius:12px;
-  color:#b8c3d4;
 }
 
-.live{
-  color:#22c55e;
+.botempty h2{
+  font-size:24px;
 }
 
-@media(max-width:700px){
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
-  .cards{
+@media(max-width:1000px){
+
+  .layout{
     grid-template-columns:1fr;
   }
 
-  .nav{
-    padding:0 16px;
+  .side{
+    display:flex;
+    overflow:auto;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:68px;
+    z-index:10;
   }
 
-  .topbar{
-    align-items:flex-start;
-    flex-direction:column;
+  .navbtn{
+    min-width:max-content;
+    margin:0 4px;
   }
 
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .marketgrid{
+    grid-template-columns:1fr;
+  }
+
+  .list{
+    max-height:250px;
+  }
+
+  .tradegrid{
+    grid-template-columns:1fr;
+  }
 }
 
+@media(max-width:600px){
+
+  .content{
+    padding:14px;
+  }
+
+  .stats{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .top{
+    padding:0 12px;
+  }
+
+  .big{
+    font-size:20px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div class="app">
 
-<header class="nav">
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<header class="top">
 
   <div class="logo">
     <span class="grad">AT</span>LAS
   </div>
 
-  <div class="status">
-    <span id="indicator" class="indicator"></span>
-    <span id="status">Non connecté</span>
+  <div class="conn">
+
+    <span id="dot" class="dot"></span>
+
+    <span id="connText">
+      Non connecté
+    </span>
+
   </div>
 
 </header>
 
-<main class="main">
 
-<section class="hero">
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-  <h1>
-    <span class="grad">ATLAS</span> Dashboard
-  </h1>
+<div id="login" class="content">
 
-  <p>
-    Votre espace de trading connecté à Deriv.
-  </p>
+  <section class="card login">
 
-</section>
+    <h1>
+      Connexion
+      <span class="grad">
+        Deriv
+      </span>
+    </h1>
 
-<!-- CONNEXION -->
+    <p class="muted">
+      Connectez votre compte avec votre Personal Access Token.
+    </p>
 
-<section id="loginCard" class="login-card">
-
-  <h2>Connexion Deriv</h2>
-
-  <p>
-    Entrez votre Personal Access Token Deriv.
-  </p>
-
-  <input
-    id="token"
-    type="password"
-    placeholder="API Token Deriv"
-    autocomplete="off"
-  >
-
-  <button
-    id="connect"
-    class="primary"
-  >
-    Se connecter
-  </button>
-
-  <div id="error" class="error"></div>
-
-</section>
-
-<!-- DASHBOARD -->
-
-<section id="dashboard" class="dashboard">
-
-  <div class="topbar">
-
-    <div>
-      <h2>Vue d'ensemble</h2>
-      <div class="live">
-        ● Compte connecté
-      </div>
-    </div>
+    <input
+      id="token"
+      class="input"
+      type="password"
+      placeholder="API Token Deriv"
+      autocomplete="off"
+    >
 
     <button
-      id="logout"
-      class="secondary"
+      id="loginBtn"
+      class="btn primary"
     >
-      Déconnexion
+      Se connecter
     </button>
+
+    <div
+      id="loginError"
+      class="error"
+    ></div>
+
+    <div class="notice">
+
+      Votre token est utilisé côté serveur.
+      Il n'est pas affiché dans l'interface.
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     WORKSPACE
+===================================================== -->
+
+<div
+  id="workspace"
+  class="layout"
+  style="display:none"
+>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="side">
+
+  <button
+    class="navbtn active"
+    data-page="dashboard"
+  >
+    ⌂ Dashboard
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="markets"
+  >
+    ◈ Marchés
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="trading"
+  >
+    ↗ Trading
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="positions"
+  >
+    ▣ Positions
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="history"
+  >
+    ◷ Historique
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="bots"
+  >
+    ⚙ Bots
+  </button>
+
+  <button
+    class="navbtn"
+    data-page="settings"
+  >
+    ⚙ Paramètres
+  </button>
+
+  <button
+    id="logout"
+    class="navbtn"
+  >
+    ⇥ Déconnexion
+  </button>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="content">
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section
+  id="dashboard"
+  class="page active"
+>
+
+  <div class="between row">
+
+    <div>
+
+      <h1>
+        Dashboard
+      </h1>
+
+      <p class="muted">
+        Vue générale de votre compte Deriv.
+      </p>
+
+    </div>
+
+    <div
+      id="accountBadge"
+      class="notice"
+    >
+      Compte : —
+    </div>
 
   </div>
 
-  <div class="cards">
 
-    <div class="stat">
+  <div class="grid stats">
 
-      <div class="label">
-        Compte
-      </div>
-
-      <div
-        id="accountId"
-        class="value"
-      >
-        —
-      </div>
-
-    </div>
-
-    <div class="stat">
+    <div class="card">
 
       <div class="label">
         Solde
@@ -336,14 +685,15 @@ button{
 
       <div
         id="balance"
-        class="value"
+        class="big"
       >
         —
       </div>
 
     </div>
 
-    <div class="stat">
+
+    <div class="card">
 
       <div class="label">
         Devise
@@ -351,7 +701,39 @@ button{
 
       <div
         id="currency"
-        class="value"
+        class="big"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        Positions
+      </div>
+
+      <div
+        id="positionCount"
+        class="big"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        P/L ouvert
+      </div>
+
+      <div
+        id="openProfit"
+        class="big"
       >
         —
       </div>
@@ -360,111 +742,702 @@ button{
 
   </div>
 
-  <div
-    id="accountInfo"
-    class="account"
-  >
-    Connexion au compte en cours...
+
+  <div class="grid tradegrid">
+
+    <div class="card">
+
+      <h2>
+        Marché actif
+      </h2>
+
+      <div
+        id="dashSymbol"
+        class="big"
+      >
+        —
+      </div>
+
+      <p
+        id="dashPrice"
+        class="muted"
+      >
+        —
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        État
+      </h2>
+
+      <p class="muted">
+
+        Flux temps réel :
+        <b id="wsState">
+          En attente
+        </b>
+
+      </p>
+
+      <p class="muted">
+
+        Trading réel :
+        <b>
+          confirmation manuelle
+        </b>
+
+      </p>
+
+    </div>
+
   </div>
 
 </section>
+
+
+<!-- =====================================================
+     MARKETS
+===================================================== -->
+
+<section
+  id="markets"
+  class="page"
+>
+
+  <h1>
+    Marchés
+  </h1>
+
+  <p class="muted">
+    Prix en temps réel.
+  </p>
+
+
+  <div
+    class="card marketgrid grid"
+    style="margin-top:18px"
+  >
+
+
+    <div
+      class="list"
+      id="assetList"
+    >
+
+      <div class="empty">
+        Chargement des marchés…
+      </div>
+
+    </div>
+
+
+    <div class="chart">
+
+      <div class="charthead">
+
+        <div>
+
+          <h2 id="chartTitle">
+            —
+          </h2>
+
+          <span
+            id="chartPrice"
+            class="muted"
+          >
+            —
+          </span>
+
+        </div>
+
+        <span
+          id="chartTick"
+          class="muted"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="chartbox">
+
+        <svg
+          id="chart"
+          class="chartline"
+          viewBox="0 0 900 380"
+          preserveAspectRatio="none"
+        ></svg>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="card"
+      style="padding:14px"
+    >
+
+      <h2>
+        Actif
+      </h2>
+
+      <p
+        id="selectedName"
+        class="muted"
+      >
+        Sélectionnez un marché.
+      </p>
+
+      <button
+        id="useTrade"
+        class="btn primary"
+        style="width:100%"
+      >
+        Trader cet actif
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRADING
+===================================================== -->
+
+<section
+  id="trading"
+  class="page"
+>
+
+  <h1>
+    Trading
+  </h1>
+
+  <p class="muted">
+    Préparez une proposition avant toute opération.
+  </p>
+
+
+  <div
+    class="grid tradegrid"
+    style="margin-top:18px"
+  >
+
+    <div class="card">
+
+      <h2>
+        Ordre
+      </h2>
+
+
+      <div class="field">
+
+        <label>
+          Actif
+        </label>
+
+        <select id="tradeSymbol">
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Type de contrat
+        </label>
+
+        <select id="contractType">
+
+          <option value="CALL">
+            Rise / CALL
+          </option>
+
+          <option value="PUT">
+            Fall / PUT
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Mise
+        </label>
+
+        <input
+          id="amount"
+          class="input"
+          type="number"
+          min="0.35"
+          step="0.01"
+          value="1"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Durée en secondes
+        </label>
+
+        <input
+          id="duration"
+          class="input"
+          type="number"
+          min="1"
+          step="1"
+          value="60"
+        >
+
+      </div>
+
+
+      <button
+        id="proposalBtn"
+        class="btn primary"
+      >
+        Obtenir une proposition
+      </button>
+
+
+      <div
+        id="proposalBox"
+        class="notice"
+      >
+        Aucune proposition.
+      </div>
+
+
+      <button
+        id="buyBtn"
+        class="btn green"
+        style="width:100%;margin-top:10px;display:none"
+      >
+        Confirmer l'achat
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Protection
+      </h2>
+
+      <p class="muted">
+
+        ATLAS demande une confirmation
+        explicite avant l'achat.
+
+      </p>
+
+      <div class="notice danger">
+
+        Le trading réel comporte un risque
+        de perte. Testez d'abord avec
+        un compte démo.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     POSITIONS
+===================================================== -->
+
+<section
+  id="positions"
+  class="page"
+>
+
+  <h1>
+    Positions
+  </h1>
+
+  <p class="muted">
+    Contrats ouverts du compte.
+  </p>
+
+
+  <div
+    class="card"
+    style="margin-top:18px"
+  >
+
+    <table class="table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Contrat
+          </th>
+
+          <th>
+            Actif
+          </th>
+
+          <th>
+            Mise
+          </th>
+
+          <th>
+            P/L
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="positionsBody">
+
+        <tr>
+
+          <td
+            colspan="5"
+            class="empty"
+          >
+            Aucune position.
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     HISTORIQUE
+===================================================== -->
+
+<section
+  id="history"
+  class="page"
+>
+
+  <h1>
+    Historique
+  </h1>
+
+  <p class="muted">
+    Historique des opérations.
+  </p>
+
+
+  <div
+    class="card"
+    style="margin-top:18px"
+  >
+
+    <div
+      id="historyBox"
+      class="empty"
+    >
+      L'historique sera synchronisé
+      avec le compte Deriv.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     BOTS
+===================================================== -->
+
+<section
+  id="bots"
+  class="page"
+>
+
+  <h1>
+    Bots
+  </h1>
+
+  <p class="muted">
+    Espace réservé à une prochaine mise à jour.
+  </p>
+
+
+  <div class="botempty">
+
+    <div>
+
+      <h2>
+        🤖 ATLAS Bots
+      </h2>
+
+      <p class="muted">
+        Le constructeur de bots sera ajouté
+        séparément.
+      </p>
+
+      <p class="muted">
+        Aucun bot ne s'exécute dans cette version.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<section
+  id="settings"
+  class="page"
+>
+
+  <h1>
+    Paramètres
+  </h1>
+
+  <p class="muted">
+    Configuration de votre espace ATLAS.
+  </p>
+
+
+  <div
+    class="grid tradegrid"
+    style="margin-top:18px"
+  >
+
+    <div class="card">
+
+      <h2>
+        Compte actif
+      </h2>
+
+      <div
+        id="settingsAccount"
+        class="big"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Sécurité
+      </h2>
+
+      <p class="muted">
+
+        Le PAT n'est pas affiché
+        dans le navigateur.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
 
 </main>
 
 </div>
 
+</div>
+
+
 <script>
 
-let socket = null;
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-function showError(message){
+let authSocket = null;
 
-  document.getElementById("error").textContent =
-    message || "";
+let publicSocket = null;
+
+let accountId = null;
+
+let selectedSymbol = "1HZ100V";
+
+let proposalId = null;
+
+let ticks = [];
+
+let assets = [];
+
+
+/* =====================================================
+   UTILITAIRES
+===================================================== */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+function fmt(number, decimals = 2){
+
+  return Number(number).toLocaleString(
+    "fr-FR",
+    {
+      minimumFractionDigits:decimals,
+      maximumFractionDigits:decimals
+    }
+  );
 
 }
 
-function getAccountId(accounts){
 
-  if(!accounts){
-    return null;
-  }
+/* =====================================================
+   CONNEXION UI
+===================================================== */
 
-  if(Array.isArray(accounts)){
+function setConnected(on){
 
-    const account = accounts[0];
+  $("dot")
+    .classList
+    .toggle("on",on);
 
-    return (
-      account?.account_id ||
-      account?.accountId ||
-      account?.loginid ||
-      account?.login_id ||
-      null
+  $("connText").textContent =
+    on
+      ? "Connecté à Deriv"
+      : "Non connecté";
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function page(name){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(x =>
+      x.classList.remove("active")
     );
 
-  }
+  document
+    .querySelectorAll(".navbtn[data-page]")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
 
-  if(typeof accounts === "object"){
+  $(name)
+    .classList
+    .add("active");
 
-    const keys = Object.keys(accounts);
+  document
+    .querySelector(
+      `.navbtn[data-page="${name}"]`
+    )
+    ?.classList
+    .add("active");
 
-    if(keys.length){
-
-      const first = accounts[keys[0]];
-
-      return (
-        first?.account_id ||
-        first?.accountId ||
-        first?.loginid ||
-        first?.login_id ||
-        keys[0]
-      );
-
-    }
-
-  }
-
-  return null;
 }
 
-async function connect(){
+
+document
+  .querySelectorAll(".navbtn[data-page]")
+  .forEach(button => {
+
+    button.onclick = () =>
+      page(button.dataset.page);
+
+  });
+
+
+/* =====================================================
+   LOGIN PAT
+===================================================== */
+
+async function login(){
 
   const token =
-    document.getElementById("token").value.trim();
+    $("token").value.trim();
+
+  $("loginError").textContent = "";
 
   if(!token){
 
-    showError("Veuillez entrer votre API Token.");
+    $("loginError").textContent =
+      "Veuillez entrer votre PAT.";
 
     return;
   }
 
-  showError("");
+  $("loginBtn").disabled = true;
 
-  const button =
-    document.getElementById("connect");
+  $("loginBtn").textContent =
+    "Connexion…";
 
-  button.disabled = true;
-  button.textContent = "Connexion...";
 
   try{
 
-    const response = await fetch(
-      "/auth/token",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          token
-        })
-      }
-    );
+    const response =
+      await fetch(
+        "/auth/token",
+        {
+          method:"POST",
 
-    const data = await response.json();
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
 
-    if(!response.ok || !data.success){
+          body:JSON.stringify({
+            token
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
 
       throw new Error(
         data.message ||
@@ -473,275 +1446,8 @@ async function connect(){
 
     }
 
-    document.getElementById("token").value = "";
 
-    document
-      .getElementById("loginCard")
-      .classList.add("hide");
+    $("token").value = "";
 
-    document
-      .getElementById("dashboard")
-      .classList.add("show");
 
-    document
-      .getElementById("status")
-      .textContent =
-      "Connecté à Deriv";
-
-    document
-      .getElementById("indicator")
-      .classList.add("on");
-
-    await loadAccount(data.accounts);
-
-  }catch(error){
-
-    showError(error.message);
-
-  }finally{
-
-    button.disabled = false;
-    button.textContent = "Se connecter";
-
-  }
-
-}
-
-async function loadAccount(accounts){
-
-  const accountId =
-    getAccountId(accounts);
-
-  if(!accountId){
-
-    document.getElementById(
-      "accountInfo"
-    ).textContent =
-      "Compte connecté. Identifiant non disponible.";
-
-    return;
-
-  }
-
-  document.getElementById(
-    "accountId"
-  ).textContent = accountId;
-
-  try{
-
-    const response = await fetch(
-      "/api/deriv/otp",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          accountId
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if(!response.ok || !data.success){
-
-      throw new Error(
-        data.message ||
-        "Impossible d'ouvrir le WebSocket."
-      );
-
-    }
-
-    if(!data.url){
-
-      throw new Error(
-        "Deriv n'a pas fourni d'URL WebSocket."
-      );
-
-    }
-
-    connectWebSocket(data.url);
-
-  }catch(error){
-
-    document.getElementById(
-      "accountInfo"
-    ).textContent =
-      error.message;
-
-  }
-
-}
-
-function connectWebSocket(url){
-
-  socket = new WebSocket(url);
-
-  socket.onopen = () => {
-
-    document.getElementById(
-      "accountInfo"
-    ).textContent =
-      "WebSocket Deriv connecté • Solde en temps réel activé.";
-
-    socket.send(
-      JSON.stringify({
-        balance:1,
-        subscribe:1
-      })
-    );
-
-  };
-
-  socket.onmessage = event => {
-
-    try{
-
-      const message =
-        JSON.parse(event.data);
-
-      if(message.msg_type === "balance"){
-
-        const balance =
-          message.balance;
-
-        document.getElementById(
-          "balance"
-        ).textContent =
-          Number(
-            balance.balance
-          ).toLocaleString(
-            "fr-FR",
-            {
-              minimumFractionDigits:2,
-              maximumFractionDigits:2
-            }
-          );
-
-        document.getElementById(
-          "currency"
-        ).textContent =
-          balance.currency || "—";
-
-        if(balance.loginid){
-
-          document.getElementById(
-            "accountId"
-          ).textContent =
-            balance.loginid;
-
-        }
-
-      }
-
-    }catch(error){
-
-      console.error(
-        "Erreur WebSocket:",
-        error
-      );
-
-    }
-
-  };
-
-  socket.onerror = error => {
-
-    console.error(
-      "WebSocket error:",
-      error
-    );
-
-    document.getElementById(
-      "accountInfo"
-    ).textContent =
-      "Erreur WebSocket Deriv.";
-
-  };
-
-}
-
-async function checkSession(){
-
-  try{
-
-    const response =
-      await fetch(
-        "/api/auth/status"
-      );
-
-    const data =
-      await response.json();
-
-    if(data.connected){
-
-      document
-        .getElementById("loginCard")
-        .classList.add("hide");
-
-      document
-        .getElementById("dashboard")
-        .classList.add("show");
-
-      document
-        .getElementById("status")
-        .textContent =
-        "Connecté à Deriv";
-
-      document
-        .getElementById("indicator")
-        .classList.add("on");
-
-      await loadAccount(
-        data.accounts
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-}
-
-document
-  .getElementById("connect")
-  .addEventListener(
-    "click",
-    connect
-  );
-
-document
-  .getElementById("logout")
-  .addEventListener(
-    "click",
-    async () => {
-
-      if(socket){
-
-        socket.close();
-        socket = null;
-
-      }
-
-      await fetch(
-        "/auth/logout",
-        {
-          method:"POST"
-        }
-      );
-
-      location.reload();
-
-    }
-  );
-
-checkSession();
-
-</script>
-
-</body>
-</html>
+    const id =
